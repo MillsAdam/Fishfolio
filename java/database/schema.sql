@@ -26,7 +26,7 @@ CREATE TABLE fish_inventory (
 );
 
 CREATE TABLE fish_tracking_history (
-    history_id SERIAL,
+    tracking_history_id SERIAL,
     fish_id INT,
     recorded_date DATE NOT NULL,
     recorded_length DECIMAL (5, 2),
