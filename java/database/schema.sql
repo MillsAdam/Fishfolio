@@ -16,8 +16,8 @@ CREATE TABLE fish_inventory (
     fish_id SERIAL,
     name VARCHAR(255),
     type VARCHAR (50) NOT NULL,
-    length DECIMAL(5, 2) NOT NULL,
-    weight DECIMAL(5, 2) NOT NULL,
+    length NUMERIC(5, 2) NOT NULL,
+    weight NUMERIC(5, 2) NOT NULL,
     location VARCHAR(255) NOT NULL,
     lure_used VARCHAR(100),
     date_caught DATE NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE fish_tracking_history (
     tracking_history_id SERIAL,
     fish_id INT,
     recorded_date DATE NOT NULL,
-    recorded_length DECIMAL (5, 2),
-    recorded_weight DECIMAL (5, 2),
-    CONSTRAINT PK_history_id PRIMARY KEY (history_id),
+    recorded_length NUMERIC (5, 2),
+    recorded_weight NUMERIC (5, 2),
+    CONSTRAINT PK_tracking_history_id PRIMARY KEY (tracking_history_id),
     CONSTRAINT FK_fish_id FOREIGN KEY (fish_id) REFERENCES fish_inventory (fish_id)
 );
 
