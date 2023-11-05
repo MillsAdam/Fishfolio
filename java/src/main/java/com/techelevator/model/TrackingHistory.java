@@ -3,7 +3,7 @@ package com.techelevator.model;
 import java.util.Date;
 
 public class TrackingHistory {
-    private int historyId;
+    private int trackingHistoryId;
     private int fishId;
     private Date recordedDate;
     private double recordedLength;
@@ -13,8 +13,8 @@ public class TrackingHistory {
     public TrackingHistory() {
     }
 
-    public TrackingHistory(int historyId, int fishId, Date recordedDate, double recordedLength, double recordedWeight) {
-        this.historyId = historyId;
+    public TrackingHistory(int trackingHistoryId, int fishId, Date recordedDate, double recordedLength, double recordedWeight) {
+        this.trackingHistoryId = trackingHistoryId;
         this.fishId = fishId;
         this.recordedDate = recordedDate;
         this.recordedLength = recordedLength;
@@ -22,12 +22,12 @@ public class TrackingHistory {
     }
 
 
-    public int getHistoryId() {
-        return historyId;
+    public int getTrackingHistoryId() {
+        return trackingHistoryId;
     }
 
-    public void setHistoryId(int historyId) {
-        this.historyId = historyId;
+    public void setTrackingHistoryId(int trackingHistoryId) {
+        this.trackingHistoryId = trackingHistoryId;
     }
 
     public int getFishId() {
@@ -66,7 +66,7 @@ public class TrackingHistory {
     @Override
     public String toString() {
         return "History{" +
-                "historyId=" + historyId +
+                "trackingHistoryId=" + trackingHistoryId +
                 ", fishId=" + fishId +
                 ", recordedDate=" + recordedDate +
                 ", recordedLength=" + recordedLength +
