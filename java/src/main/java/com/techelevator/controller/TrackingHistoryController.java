@@ -30,7 +30,7 @@ public class TrackingHistoryController {
     public List<TrackingHistory> getTrackingHistory (
             @RequestParam(required = false) Integer trackingHistoryId,
             @RequestParam(required = false) Integer fishId,
-            @RequestParam(required = false) Date recordedDate) {
+            @RequestParam(required = false) String recordedDate) {
 
         logger.info("Received TrackingHistory Request: trackingHistoryId{}, fishId{}, recordedDate{}",
                 trackingHistoryId, fishId, recordedDate);

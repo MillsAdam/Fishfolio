@@ -26,7 +26,7 @@ public class TrackingHistoryService {
         return trackingHistoryDao.getTrackingHistoryByFishId(fishId);
     }
 
-    public List<TrackingHistory> getTrackingHistoryByRecordedDate(Date recordedDate) {
+    public List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate) {
         return trackingHistoryDao.getTrackingHistoryByRecordedDate(recordedDate);
     }
 

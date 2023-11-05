@@ -9,7 +9,7 @@ public interface TrackingHistoryDao {
     List<TrackingHistory> getTrackingHistory();
     TrackingHistory getTrackingHistoryById(int trackingHistoryId);
     List<TrackingHistory> getTrackingHistoryByFishId(int fishId);
-    List<TrackingHistory> getTrackingHistoryByRecordedDate(Date recordedDate);
+    List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate);
 
     TrackingHistory createTrackingHistory(TrackingHistory trackingHistory);
     TrackingHistory updateTrackingHistory(TrackingHistory trackingHistory);

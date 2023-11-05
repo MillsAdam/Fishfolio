@@ -57,7 +57,7 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
     @Override
     public List<TrackingHistory> getTrackingHistoryByFishId(int fishId) {
         List<TrackingHistory> trackingHistoryList = new ArrayList<>();
-        String sql = "SELECT * FROM fish_tracking_history WHERE fish_id";
+        String sql = "SELECT * FROM fish_tracking_history WHERE fish_id = ?";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, fishId);
@@ -71,10 +71,14 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
         return trackingHistoryList;
     }
 
+
+
+
+
     @Override
-    public List<TrackingHistory> getTrackingHistoryByRecordedDate(Date recordedDate) {
+    public List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate) {
         List<TrackingHistory> trackingHistoryList = new ArrayList<>();
-        String sql = "SELECT * FROM fish_tracking_history WHERE recorded_date = ?";
+        String sql = "SELECT * FROM fish_tracking_history WHERE recorded_date = CAST(? AS DATE)";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recordedDate);
