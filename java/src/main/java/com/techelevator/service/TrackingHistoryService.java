@@ -30,6 +30,10 @@ public class TrackingHistoryService {
         return trackingHistoryDao.getTrackingHistoryByRecordedDate(recordedDate);
     }
 
+    public List<TrackingHistory> getTrackingHistoryByMonthAndYear(int month, int year) {
+        return trackingHistoryDao.getTrackingHistoryByMonthAndYear(month, year);
+    }
+
     public TrackingHistory createTrackingHistory(TrackingHistory trackingHistory) {
         return trackingHistoryDao.createTrackingHistory(trackingHistory);
     }

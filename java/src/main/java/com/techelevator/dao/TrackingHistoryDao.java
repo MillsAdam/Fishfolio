@@ -16,4 +16,7 @@ public interface TrackingHistoryDao {
     int deleteTrackingHistory(int trackingHistoryId);
 
 
+    List<TrackingHistory> getTrackingHistoryByMonthAndYear(int month, int year);
+
+
 }

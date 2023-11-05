@@ -30,7 +30,9 @@ public class TrackingHistoryController {
     public List<TrackingHistory> getTrackingHistory (
             @RequestParam(required = false) Integer trackingHistoryId,
             @RequestParam(required = false) Integer fishId,
-            @RequestParam(required = false) String recordedDate) {
+            @RequestParam(required = false) String recordedDate,
+            @RequestParam(required = false) Integer month,
+            @RequestParam(required = false) Integer year) {
 
         logger.info("Received TrackingHistory Request: trackingHistoryId{}, fishId{}, recordedDate{}",
                 trackingHistoryId, fishId, recordedDate);
@@ -41,6 +43,8 @@ public class TrackingHistoryController {
             return trackingHistoryService.getTrackingHistoryByFishId(fishId);
         } else if (recordedDate != null) {
             return trackingHistoryService.getTrackingHistoryByRecordedDate(recordedDate);
+        } else if (month != null && year != null) {
+            return trackingHistoryService.getTrackingHistoryByMonthAndYear(month, year);
         } else {
             return trackingHistoryService.getTrackingHistory();
         }

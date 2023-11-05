@@ -71,10 +71,6 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
         return trackingHistoryList;
     }
 
-
-
-
-
     @Override
     public List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate) {
         List<TrackingHistory> trackingHistoryList = new ArrayList<>();
@@ -82,6 +78,26 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recordedDate);
+            while (results.next()) {
+                trackingHistoryList.add(mapRowToTrackingHistory(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return trackingHistoryList;
+    }
+
+    @Override
+    public List<TrackingHistory> getTrackingHistoryByMonthAndYear(int month, int year) {
+        List<TrackingHistory> trackingHistoryList = new ArrayList<>();
+        String sql = "SELECT * " +
+                "FROM fish_tracking_history " +
+                "WHERE EXTRACT(MONTH FROM recorded_date) = ? " +
+                "  AND EXTRACT(YEAR FROM recorded_date) = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, month, year);
             while (results.next()) {
                 trackingHistoryList.add(mapRowToTrackingHistory(results));
             }
@@ -156,6 +172,8 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
 
         return numberOfRows;
     }
+
+
 
     private TrackingHistory mapRowToTrackingHistory(SqlRowSet rs) {
         TrackingHistory trackingHistory = new TrackingHistory();
