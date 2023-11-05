@@ -208,13 +208,13 @@ public class JdbcFishDao implements FishDao{
                     "fi.location, " +
                     "fi.lure_used, " +
                     "fi.date_caught, " +
-                    "fi.image_url" +
+                    "fi.image_url " +
                 "FROM fish_inventory AS fi " +
                 "JOIN (" +
-                    "SELECT type, COUNT(*) as type_count" +
-                    "FROM fish_inventory" +
+                    "SELECT type, COUNT(*) as type_count " +
+                    "FROM fish_inventory " +
                     "GROUP BY type" +
-                ") AS tc ON fi.type = tc.type" +
+                ") AS tc ON fi.type = tc.type " +
                 "ORDER BY tc.type_count DESC, fi.type";
 
         try {
