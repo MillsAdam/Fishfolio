@@ -13,4 +13,8 @@ public interface FishDao {
     Fish createFish(Fish fish);
     Fish updateFish(Fish fish);
     int deleteFishById(int fishId);
+
+    List<Fish> getFishByMostRecent();
+    List<Fish> getFishByOldest();
+    List<Fish> getFishByMostPopular();
 }
