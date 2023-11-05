@@ -198,10 +198,24 @@ public class JdbcFishDao implements FishDao{
     @Override
     public List<Fish> getFishByMostPopular() {
         List<Fish> fishList = new ArrayList<>();
-        String sql = "SELECT type, COUNT(*) as type_count " +
-                "FROM fish_inventory " +
-                "GROUP BY type " +
-                "ORDER BY type_count DESC";
+        String sql = "" +
+                "SELECT " +
+                    "fi.fish_id, " +
+                    "fi.name, " +
+                    "fi.type, " +
+                    "fi.length, " +
+                    "fi.weight, " +
+                    "fi.location, " +
+                    "fi.lure_used, " +
+                    "fi.date_caught, " +
+                    "fi.image_url" +
+                "FROM fish_inventory AS fi " +
+                "JOIN (" +
+                    "SELECT type, COUNT(*) as type_count" +
+                    "FROM fish_inventory" +
+                    "GROUP BY type" +
+                ") AS tc ON fi.type = tc.type" +
+                "ORDER BY tc.type_count DESC, fi.type";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
