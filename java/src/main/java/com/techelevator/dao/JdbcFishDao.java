@@ -93,8 +93,7 @@ public class JdbcFishDao implements FishDao{
         String sql = "INSERT INTO fish_inventory (" +
                 "name, type, length, weight, " +
                 "location, lure_used, date_caught, image_url) " +
-                "VALUES (" +
-                "?, ?, ?, ?, ?, ?, ?, ?) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                 "RETURNING fish_id";
 
         try {

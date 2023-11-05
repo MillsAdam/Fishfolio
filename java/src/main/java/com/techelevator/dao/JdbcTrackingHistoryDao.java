@@ -1,47 +1,156 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.TrackingHistory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
+    private final JdbcTemplate jdbcTemplate;
+    public JdbcTrackingHistoryDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+
     @Override
     public List<TrackingHistory> getTrackingHistory() {
-        return null;
+        List<TrackingHistory> trackingHistoryList = new ArrayList<>();
+        String sql = "SELECT * FROM fish_tracking_history";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                trackingHistoryList.add(mapRowToTrackingHistory(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return trackingHistoryList;
     }
 
     @Override
     public TrackingHistory getTrackingHistoryById(int trackingHistoryId) {
-        return null;
+        TrackingHistory trackingHistory = null;
+        String sql = "SELECT * FROM fish_tracking_history WHERE tracking_history_id = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, trackingHistoryId);
+            if (results.next()) {
+                trackingHistory = mapRowToTrackingHistory(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return trackingHistory;
     }
 
     @Override
     public List<TrackingHistory> getTrackingHistoryByFishId(int fishId) {
-        return null;
+        List<TrackingHistory> trackingHistoryList = new ArrayList<>();
+        String sql = "SELECT * FROM fish_tracking_history WHERE fish_id";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, fishId);
+            while (results.next()) {
+                trackingHistoryList.add(mapRowToTrackingHistory(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return trackingHistoryList;
     }
 
     @Override
     public List<TrackingHistory> getTrackingHistoryByRecordedDate(Date recordedDate) {
-        return null;
+        List<TrackingHistory> trackingHistoryList = new ArrayList<>();
+        String sql = "SELECT * FROM fish_tracking_history WHERE recorded_date = ?";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recordedDate);
+            while (results.next()) {
+                trackingHistoryList.add(mapRowToTrackingHistory(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return trackingHistoryList;
     }
 
     @Override
     public TrackingHistory createTrackingHistory(TrackingHistory trackingHistory) {
-        return null;
+        TrackingHistory newTrackingHistory = null;
+        String sql = "INSERT INTO fish_tracking_history (" +
+                "fish_id, recorded_date, " +
+                "recorded_length, recorded_weight) " +
+                "VALUES (?, ?, ?, ?) " +
+                "RETURNING tracking_history_id";
+
+        try {
+            int trackingHistoryId = jdbcTemplate.queryForObject(sql, int.class,
+                    trackingHistory.getFishId(), trackingHistory.getRecordedDate(),
+                    trackingHistory.getRecordedLength(), trackingHistory.getRecordedWeight());
+            newTrackingHistory = getTrackingHistoryById(trackingHistoryId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return newTrackingHistory;
     }
 
     @Override
     public TrackingHistory updateTrackingHistory(TrackingHistory trackingHistory) {
-        return null;
+        TrackingHistory updatedTrackingHistory = null;
+        String sql = "UPDATE fish_tracking_history " +
+                "SET " +
+                "fish_id = ?, recorded_date = ?, " +
+                "recorded_length = ?, recorded_weight = ? " +
+                "WHERE tracking_history_id = ?";
+
+        try {
+            int rowsAffected = jdbcTemplate.update(sql,
+                    trackingHistory.getFishId(), trackingHistory.getRecordedDate(),
+                    trackingHistory.getRecordedLength(), trackingHistory.getRecordedWeight(),
+                    trackingHistory.getTrackingHistoryId());
+            if (rowsAffected == 0) {
+                throw new DaoException("Zero rows affected, expected at least one.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return updatedTrackingHistory;
     }
 
     @Override
     public int deleteTrackingHistory(int trackingHistoryId) {
-        return 0;
+        int numberOfRows = 0;
+        String sql = "DELETE FROM fish_tracking_history WHERE tracking_history_id = ?";
+
+        try {
+            numberOfRows = jdbcTemplate.update(sql, trackingHistoryId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return numberOfRows;
     }
 
     private TrackingHistory mapRowToTrackingHistory(SqlRowSet rs) {
