@@ -29,9 +29,9 @@ INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, dat
 INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, date_caught, image_url)
     VALUES ('Sockeye Salmon', 'Salmon', 25.4, 8.2, 'Kasilof River', 'Spinner', '2023-01-25', NULL);
 INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, date_caught, image_url)
-    VALUES ('White Bass', 'Bass', 15.8, 2.3, 'Lake Taxoma', 'Jig', '2023-02-07', NULL);
+    VALUES ('White Bass', 'Bass', 15.8, 2.3, 'Lake Texoma', 'Jig', '2023-02-07', NULL);
 INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, date_caught, image_url)
-    VALUES ('Artic Char', 'Char', 19.7, 3.6, 'Lake Yukon', 'Spoon', '2023-03-22', NULL);
+    VALUES ('Arctic Char', 'Char', 19.7, 3.6, 'Lake Yukon', 'Spoon', '2023-03-22', NULL);
 INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, date_caught, image_url)
     VALUES ('Bluegill', 'Sunfish', 7.3, 0.4, 'Pond', 'Worm', '2023-04-05', NULL);
 INSERT INTO fish_inventory (name, type, length, weight, location, lure_used, date_caught, image_url)

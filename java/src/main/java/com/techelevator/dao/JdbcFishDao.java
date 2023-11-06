@@ -253,6 +253,42 @@ public class JdbcFishDao implements FishDao{
         return fishList;
     }
 
+    @Override
+    public List<String> getFishTypes() {
+        List<String> fishTypesList = new ArrayList<>();
+        String sql = "SELECT DISTINCT(type) FROM fish_inventory ORDER BY type";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                String type = results.getString("type");
+                fishTypesList.add(type);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return fishTypesList;
+    }
+
+    @Override
+    public List<String> getFishLocations() {
+        List<String> fishLocationsList = new ArrayList<>();
+        String sql = "SELECT DISTINCT(location) FROM fish_inventory ORDER BY location";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                String location = results.getString("location");
+                fishLocationsList.add(location);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database.", e);
+        }
+
+        return fishLocationsList;
+    }
+
 
     private Fish mapRowToFish(SqlRowSet rs) {
         Fish fish = new Fish();

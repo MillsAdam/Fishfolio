@@ -5,6 +5,8 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
+import Inventory from '../views/Inventory.vue'
+import History from '../views/History.vue'
 
 Vue.use(Router)
 
@@ -52,7 +54,23 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    }, 
+    {
+      path: "/api/fish",
+      name: "inventory",
+      component: Inventory,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/api/tracking-history",
+      name: "history",
+      component: History,
+      meta: {
+        requiresAuth: true
+      }
+    },
   ]
 })
 

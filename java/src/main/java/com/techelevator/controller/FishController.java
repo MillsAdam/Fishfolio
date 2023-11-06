@@ -32,7 +32,7 @@ public class FishController {
             @RequestParam(required = false) String location,
             @RequestParam(required = false) String sortBy) {
 
-        logger.info("Received Fish Request: fishId{}, type{}, location{}, sortyBy{}",
+        logger.info("Received Fish Request: fishId: {}, type: {}, location: {}, sortBy: {}",
                 fishId, type, location, sortBy);
 
         if (fishId != null) {
@@ -41,11 +41,11 @@ public class FishController {
             return fishService.getFishByType(type);
         } else if (location != null) {
             return fishService.getFishByLocation(location);
-        } else if ("most-recent".equals(sortBy)) {
+        } else if ("Most Recent".equals(sortBy)) {
             return fishService.getFishByMostRecent();
-        } else if ("oldest".equals(sortBy)) {
+        } else if ("Oldest".equals(sortBy)) {
             return fishService.getFishByOldest();
-        } else if ("most-popular".equals(sortBy)) {
+        } else if ("Most Popular".equals(sortBy)) {
             return fishService.getFishByMostPopular();
         } else {
             return fishService.getFish();
@@ -73,4 +73,18 @@ public class FishController {
     public void deleteFish(@PathVariable int fishId) {
         fishService.deleteFishById(fishId);
     }
+
+
+    @GetMapping
+    @RequestMapping(path="/types", method = RequestMethod.GET)
+    public List<String> getFishTypes() {
+        return fishService.getFishTypes();
+    }
+
+    @GetMapping
+    @RequestMapping(path="/locations", method = RequestMethod.GET)
+    public List<String> getFishLocations() {
+        return fishService.getFishLocations();
+    }
+
 }

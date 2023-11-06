@@ -52,4 +52,10 @@ public class FishService {
     public int deleteFishById(int fishId) {
         return fishDao.deleteFishById(fishId);
     }
+
+    public List<String> getFishTypes() {
+        return fishDao.getFishTypes();
+    }
+
+    public List<String> getFishLocations() { return fishDao.getFishLocations(); }
 }

@@ -17,4 +17,7 @@ public interface FishDao {
     List<Fish> getFishByMostRecent();
     List<Fish> getFishByOldest();
     List<Fish> getFishByMostPopular();
+
+    List<String> getFishTypes();
+    List<String> getFishLocations();
 }

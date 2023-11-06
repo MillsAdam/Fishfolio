@@ -33,7 +33,7 @@ public class TrackingHistoryController {
             @RequestParam(required = false) Integer month,
             @RequestParam(required = false) Integer year) {
 
-        logger.info("Received TrackingHistory Request: trackingHistoryId{}, fishId{}, month{}, year{}",
+        logger.info("Received TrackingHistory Request: trackingHistoryId: {}, fishId: {}, month: {}, year: {}",
                 trackingHistoryId, fishId, month, year);
 
         if (trackingHistoryId != null) {
