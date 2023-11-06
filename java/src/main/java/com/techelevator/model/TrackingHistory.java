@@ -1,11 +1,11 @@
 package com.techelevator.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class TrackingHistory {
     private int trackingHistoryId;
     private int fishId;
-    private Date recordedDate;
+    private LocalDate recordedDate;
     private double recordedLength;
     private double recordedWeight;
 
@@ -13,7 +13,7 @@ public class TrackingHistory {
     public TrackingHistory() {
     }
 
-    public TrackingHistory(int trackingHistoryId, int fishId, Date recordedDate, double recordedLength, double recordedWeight) {
+    public TrackingHistory(int trackingHistoryId, int fishId, LocalDate recordedDate, double recordedLength, double recordedWeight) {
         this.trackingHistoryId = trackingHistoryId;
         this.fishId = fishId;
         this.recordedDate = recordedDate;
@@ -38,11 +38,11 @@ public class TrackingHistory {
         this.fishId = fishId;
     }
 
-    public Date getRecordedDate() {
+    public LocalDate getRecordedDate() {
         return recordedDate;
     }
 
-    public void setRecordedDate(Date recordedDate) {
+    public void setRecordedDate(LocalDate recordedDate) {
         this.recordedDate = recordedDate;
     }
 

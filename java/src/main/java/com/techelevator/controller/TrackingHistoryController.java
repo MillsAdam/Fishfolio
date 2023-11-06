@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -30,19 +30,16 @@ public class TrackingHistoryController {
     public List<TrackingHistory> getTrackingHistory (
             @RequestParam(required = false) Integer trackingHistoryId,
             @RequestParam(required = false) Integer fishId,
-            @RequestParam(required = false) String recordedDate,
             @RequestParam(required = false) Integer month,
             @RequestParam(required = false) Integer year) {
 
-        logger.info("Received TrackingHistory Request: trackingHistoryId{}, fishId{}, recordedDate{}",
-                trackingHistoryId, fishId, recordedDate);
+        logger.info("Received TrackingHistory Request: trackingHistoryId{}, fishId{}, month{}, year{}",
+                trackingHistoryId, fishId, month, year);
 
         if (trackingHistoryId != null) {
             return List.of(trackingHistoryService.getTrackingHistoryById(trackingHistoryId));
         } else if (fishId != null ) {
             return trackingHistoryService.getTrackingHistoryByFishId(fishId);
-        } else if (recordedDate != null) {
-            return trackingHistoryService.getTrackingHistoryByRecordedDate(recordedDate);
         } else if (month != null && year != null) {
             return trackingHistoryService.getTrackingHistoryByMonthAndYear(month, year);
         } else {

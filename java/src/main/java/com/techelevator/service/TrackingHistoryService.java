@@ -4,7 +4,7 @@ import com.techelevator.dao.TrackingHistoryDao;
 import com.techelevator.model.TrackingHistory;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,10 +24,6 @@ public class TrackingHistoryService {
 
     public List<TrackingHistory> getTrackingHistoryByFishId(int fishId) {
         return trackingHistoryDao.getTrackingHistoryByFishId(fishId);
-    }
-
-    public List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate) {
-        return trackingHistoryDao.getTrackingHistoryByRecordedDate(recordedDate);
     }
 
     public List<TrackingHistory> getTrackingHistoryByMonthAndYear(int month, int year) {

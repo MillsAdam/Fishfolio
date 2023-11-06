@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -61,23 +61,6 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, fishId);
-            while (results.next()) {
-                trackingHistoryList.add(mapRowToTrackingHistory(results));
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database.", e);
-        }
-
-        return trackingHistoryList;
-    }
-
-    @Override
-    public List<TrackingHistory> getTrackingHistoryByRecordedDate(String recordedDate) {
-        List<TrackingHistory> trackingHistoryList = new ArrayList<>();
-        String sql = "SELECT * FROM fish_tracking_history WHERE recorded_date = CAST(? AS DATE)";
-
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recordedDate);
             while (results.next()) {
                 trackingHistoryList.add(mapRowToTrackingHistory(results));
             }
@@ -148,6 +131,7 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one.");
             }
+            updatedTrackingHistory = getTrackingHistoryById(trackingHistory.getTrackingHistoryId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database.", e);
         } catch (DataIntegrityViolationException e) {
@@ -179,7 +163,7 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
         TrackingHistory trackingHistory = new TrackingHistory();
         trackingHistory.setTrackingHistoryId(rs.getInt("tracking_history_id"));
         trackingHistory.setFishId(rs.getInt("fish_id"));
-        trackingHistory.setRecordedDate(rs.getDate("recorded_date"));
+        trackingHistory.setRecordedDate(rs.getDate("recorded_date").toLocalDate());
         trackingHistory.setRecordedLength(rs.getDouble("recorded_length"));
         trackingHistory.setRecordedWeight(rs.getDouble("recorded_weight"));
         return trackingHistory;

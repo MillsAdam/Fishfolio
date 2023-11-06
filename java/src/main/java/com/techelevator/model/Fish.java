@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class Fish {
     private int fishId;
@@ -10,7 +11,7 @@ public class Fish {
     private double weight;
     private String location;
     private String lureUsed;
-    private Date dateCaught;
+    private LocalDate dateCaught;
     private String imageUrl;
 
 
@@ -18,7 +19,7 @@ public class Fish {
     }
 
 
-    public Fish(int fishId, String name, String type, double length, double weight, String location, String lureUsed, Date dateCaught, String imageUrl) {
+    public Fish(int fishId, String name, String type, double length, double weight, String location, String lureUsed, LocalDate dateCaught, String imageUrl) {
         this.fishId = fishId;
         this.name = name;
         this.type = type;
@@ -87,11 +88,11 @@ public class Fish {
         this.lureUsed = lureUsed;
     }
 
-    public Date getDateCaught() {
+    public LocalDate getDateCaught() {
         return dateCaught;
     }
 
-    public void setDateCaught(Date dateCaught) {
+    public void setDateCaught(LocalDate dateCaught) {
         this.dateCaught = dateCaught;
     }
 

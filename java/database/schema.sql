@@ -14,7 +14,7 @@ CREATE TABLE users (
 
 CREATE TABLE fish_inventory (
     fish_id SERIAL,
-    name VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
     type VARCHAR (50) NOT NULL,
     length NUMERIC(5, 2) NOT NULL,
     weight NUMERIC(5, 2) NOT NULL,
