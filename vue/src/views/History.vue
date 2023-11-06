@@ -41,7 +41,7 @@
 
         </form>
 
-        <div v-if="filteredHistoryList.length > 0" class="table-container">
+        <div v-if="historyList.length > 0" class="table-container">
             <table class="table table-striped">
                 <thead>
                     <tr class="table-headers">
@@ -53,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="history in filteredHistoryList" :key="history.id">
+                    <tr v-for="history in historyList" :key="history.id">
                         <td>{{ history.trackingHistoryId }}</td>
                         <td>{{ history.fishId }}</td>
                         <td>{{ history.recordedDate }}</td>
@@ -76,7 +76,6 @@ import TrackingHistoryService from "../services/TrackingHistoryService.js";
 export default {
     data() {
         return {
-            filteredHistoryList: [],
             historyList: [],
             monthOptions: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             yearOptions: ['2022', '2023'],
@@ -93,22 +92,44 @@ export default {
             console.log("Fish ID:", this.fishId);
             console.log("Month:", this.month);
             console.log("Year:", this.year);
+            console.log("");
 
-            const filteredData = this.historyList.filter(history => {
-                const dateParts = history.recordedDate.split("-");
-                const recordedMonth = dateParts[1];
-                const recordedYear = dateParts[0];
-
-                return (
-                    (this.trackingHistoryId === "" || history.trackingHistoryId === this.trackingHistoryId) &&
-                    (this.fishId === "" || history.fishId === this.fishId) &&
-                    (this.month === "" || recordedMonth === this.month) &&
-                    (this.year === "" || recordedYear === this.year)
-                );
-            });
-
-            console.log("Filtered Data:", filteredData);
-            this.filteredHistoryList = filteredData
+            if (this.trackingHistoryId != "") {
+                TrackingHistoryService.getTrackingHistory({
+                    trackingHistoryId: this.trackingHistoryId
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.historyList = response.data;
+                }).catch(error => {
+                    console.log('Error', error.response)
+                });
+            } else if (this.fishId != "") {
+                TrackingHistoryService.getTrackingHistory({
+                    fishId: this.fishId
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.historyList = response.data;
+                }).catch(error => {
+                    console.log('Error', error.response)
+                });
+            } else if (this.month != "" && this.year != "") {
+                TrackingHistoryService.getTrackingHistory({
+                    month: this.month,
+                    year: this.year
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.historyList = response.data;
+                }).catch(error => {
+                    console.log('Error', error.response)
+                });
+            } else {
+                TrackingHistoryService.getTrackingHistory({}).then(response => {
+                    console.log('Response', response.data)
+                    this.historyList = response.data;
+                }).catch(error => {
+                    console.log('Error', error.response)
+                });
+            }
         },
 
         clearFilters() {
@@ -124,7 +145,6 @@ export default {
         TrackingHistoryService.getTrackingHistory({}).then(response => {
             console.log('Response', response.data)
             this.historyList = response.data;
-            this.filteredHistoryList = response.data;
         }).catch(error => {
             console.log('Error', error.response)
         });

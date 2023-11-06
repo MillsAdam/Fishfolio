@@ -35,21 +35,23 @@ public class FishController {
         logger.info("Received Fish Request: fishId: {}, type: {}, location: {}, sortBy: {}",
                 fishId, type, location, sortBy);
 
+
         if (fishId != null) {
             return List.of(fishService.getFishById(fishId));
         } else if (type != null) {
             return fishService.getFishByType(type);
         } else if (location != null) {
             return fishService.getFishByLocation(location);
-        } else if ("Most Recent".equals(sortBy)) {
-            return fishService.getFishByMostRecent();
-        } else if ("Oldest".equals(sortBy)) {
-            return fishService.getFishByOldest();
-        } else if ("Most Popular".equals(sortBy)) {
-            return fishService.getFishByMostPopular();
-        } else {
-            return fishService.getFish();
+        } else if (sortBy != null) {
+            if (sortBy.contains("Recent")) {
+                return fishService.getFishByMostRecent();
+            } else if (sortBy.contains("Oldest")) {
+                return fishService.getFishByOldest();
+            } else if (sortBy.contains("Popular")) {
+                return fishService.getFishByMostPopular();
+            }
         }
+        return fishService.getFish();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

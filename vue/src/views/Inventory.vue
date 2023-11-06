@@ -43,7 +43,7 @@
             
         </form>
 
-        <div v-if="filteredFishList.length > 0" class="table-container">
+        <div v-if="fishList.length > 0" class="table-container">
             <table class="table table-striped">
                 <thead>
                     <tr class="table-headers">
@@ -59,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="fish in filteredFishList" :key="fish.id">
+                    <tr v-for="fish in fishList" :key="fish.id">
                         <td>{{ fish.fishId }}</td>
                         <td>{{ fish.name }}</td>
                         <td>{{ fish.type }}</td>
@@ -104,19 +104,54 @@ export default {
             console.log("Fish ID:", this.fishId);
             console.log("Type:", this.type);
             console.log("Location:", this.location);
+            console.log("");
 
-            const filteredData = this.fishList.filter(fish => {
-                return (
-                    (this.fishId === "" || fish.fishId === this.fishId) &&
-                    (this.type === "" || fish.type === this.type) &&
-                    (this.location === "" || fish.location === this.location) &&
-                    (this.sortBy === "" || fish.sortBy === this.sortBy)
-                );
-            });
-
-            console.log("Filtered Data:", filteredData);
-            this.filteredFishList = filteredData;
+            if (this.fishId != "") {
+                FishService.getFish({
+                    fishId: this.fishId
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.fishList = response.data;
+                }).catch(error => {
+                    console.log('Error:', error);
+                });
+            } else if (this.type != "") {
+                FishService.getFish({
+                    type: this.type
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.fishList = response.data;
+                }).catch(error => {
+                    console.log('Error:', error);
+                });
+            } else if (this.location != "") {
+                FishService.getFish({
+                    location: this.location
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.fishList = response.data;
+                }).catch(error => {
+                    console.log('Error:', error);
+                });
+            } else if (this.sortBy != "") {
+                FishService.getFish({
+                    sortBy: this.sortBy
+                }).then(response => {
+                    console.log('Response', response.data)
+                    this.fishList = response.data;
+                }).catch(error => {
+                    console.log('Error:', error);
+                });
+            } else {
+                FishService.getFish({}).then(response => {
+                    console.log('Response', response.data)
+                    this.fishList = response.data;
+                }).catch(error => {
+                    console.log('Error:', error);
+                });
+            }
         },
+
 
         clearFilters() {
             this.fishId = "";
@@ -151,7 +186,6 @@ export default {
         FishService.getFish({}).then(response => {
             console.log('Response', response.data)
             this.fishList = response.data;
-            this.filteredFishList = response.data;
         }).catch(error => {
             console.log('Error:', error);
         });
