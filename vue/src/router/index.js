@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Inventory from '../views/Inventory.vue'
 import History from '../views/History.vue'
+import FishForm from '../components/FishForm.vue'
+import HistoryForm from '../components/HistoryForm.vue'
 
 Vue.use(Router)
 
@@ -67,6 +69,22 @@ const router = new Router({
       path: "/api/tracking-history",
       name: "history",
       component: History,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/form/fish",
+      name: "fish-form",
+      component: FishForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/form/tracking-history",
+      name: "history-form",
+      component: HistoryForm,
       meta: {
         requiresAuth: true
       }

@@ -95,11 +95,15 @@ export default {
             console.log("Year:", this.year);
 
             const filteredData = this.historyList.filter(history => {
+                const dateParts = history.recordedDate.split("-");
+                const recordedMonth = dateParts[1];
+                const recordedYear = dateParts[0];
+
                 return (
                     (this.trackingHistoryId === "" || history.trackingHistoryId === this.trackingHistoryId) &&
                     (this.fishId === "" || history.fishId === this.fishId) &&
-                    (this.month === "" || history.recordedDate.includes(this.month)) &&
-                    (this.year === "" || history.recordedDate.includes(this.year))
+                    (this.month === "" || recordedMonth === this.month) &&
+                    (this.year === "" || recordedYear === this.year)
                 );
             });
 
@@ -129,53 +133,6 @@ export default {
 </script>
 
 <style scoped>
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    gap: 10px;
-}
-
-.form-group {
-    flex: 1;
-    margin-bottom: 10px;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
-
-select, input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-@media (max-width: 767px) {
-    /* .form-row {
-        flex-direction: column;
-    }
-
-    .form-group {
-        margin-bottom: 0px;
-        display: flex;
-        align-items: center;
-    }
-    
-    .form-group label {
-        margin-right: 5px;
-    }
-
-    .form-group select, .form-group input {
-        margin-left: 5px;
-    } */
-}
-
 button {
   width: 100%;
   margin-top: 10px;
