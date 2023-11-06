@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <p>If you are seeing this, you are authenticated.</p>
+    <h1>Fishfolio</h1>
+    <p>Inventory and monitor fish statistics over time.</p>
   </div>
 </template>
 

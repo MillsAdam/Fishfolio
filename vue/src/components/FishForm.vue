@@ -16,7 +16,10 @@
                 <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
                 <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
-                <button type="submit">Create Fish</button>
+                <div class="form-row">
+                    <button type="submit">Create Fish</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 
@@ -31,14 +34,20 @@
                 <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
                 <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
-                <button type="submit">Update Fish</button>
+                <div class="form-row">
+                    <button type="submit">Update Fish</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 
         <div class="form-row" v-if="showDeleteFishForm">
             <form @submit.prevent="deleteFishForm" class="form-group">
                 <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
-                <button type="submit">Delete Fish</button>
+                <div class="form-row">
+                    <button type="submit">Delete Fish</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 

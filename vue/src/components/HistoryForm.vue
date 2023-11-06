@@ -12,7 +12,10 @@
                 <input v-model="recordedDate" type="text" class="form-control" id="type" placeholder="Enter Date">
                 <input v-model="recordedLength" type="text" class="form-control" id="length" placeholder="Enter Length">
                 <input v-model="recordedWeight" type="text" class="form-control" id="weight" placeholder="Enter Weight">
-                <button type="submit">Create History</button>
+                <div class="form-row">
+                    <button type="submit">Create History</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 
@@ -23,14 +26,20 @@
                 <input v-model="recordedDate" type="text" class="form-control" id="type" placeholder="Enter Date">
                 <input v-model="recordedLength" type="text" class="form-control" id="length" placeholder="Enter Length">
                 <input v-model="recordedWeight" type="text" class="form-control" id="weight" placeholder="Enter Weight">
-                <button type="submit">Update Fish</button>
+                <div class="form-row">
+                    <button type="submit">Update Fish</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 
         <div class="form-row" v-if="showDeleteHistoryForm">
             <form @submit.prevent="deleteHistoryForm" class="form-group">
                 <input v-model="trackingHistoryId" type="text" class="form-control" id="trackingHistoryId" placeholder="Enter History ID">
-                <button type="submit">Delete Fish</button>
+                <div class="form-row">
+                    <button type="submit">Delete Fish</button>
+                    <button @click="resetForm">Reset Form</button>
+                </div>
             </form>
         </div>
 
