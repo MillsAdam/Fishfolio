@@ -5,7 +5,7 @@
       
             <template v-if="isLoggedIn">
                 &nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>&nbsp;|&nbsp;
+                <router-link v-bind:to="{ name: 'logout' }" >Logout</router-link>&nbsp;|&nbsp;
                 <router-link v-bind:to="{ name: 'inventory' }">Inventory</router-link>&nbsp;|&nbsp;
                 <router-link v-bind:to="{ name: 'history' }">History</router-link>
             </template>
@@ -22,16 +22,20 @@
 </template>
 
 <script>
+
 export default {
     computed: {
         isLoggedIn() {
-            console.log('User Role: ', this.$store.state.user?.role)
-            return this.$store.state.token != '';
+            return !!this.$store.state.token;
         },
         isAdmin() {
-            console.log('User Role: ', this.$store.state.user?.role);
-            console.log('User Authorities: ', this.$store.state.user.authorities);
-            return this.$store.state.user.authorities && this.$store.state.user.authorities[0].name === 'ROLE_ADMIN';
+            const isAdmin = this.$store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false);
+
+            console.log('User: ', this.$store.state.user);
+            console.log('Authorities: ', this.$store.state.user?.authorities);
+            console.log('Is Admin: ', isAdmin);
+
+            return isAdmin;
         }
     }
 }

@@ -66,7 +66,7 @@ const router = new Router({
       }
     },
     {
-      path: "/api/tracking-history",
+      path: "/api/history",
       name: "history",
       component: History,
       meta: {
@@ -78,14 +78,16 @@ const router = new Router({
       name: "fish-form",
       component: FishForm,
       meta: {
+        requiresAuth: true,
         requiresAdmin: true
       }
     },
     {
-      path: "/form/tracking-history",
+      path: "/form/history",
       name: "history-form",
       component: HistoryForm,
       meta: {
+        requiresAuth: true,
         requiresAdmin: true
       }
     },
@@ -97,14 +99,16 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
   const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
 
-  const isLoggedIn = store.state.token !== ''; // added to check if user is logged in
-  const isAdmin = store.state.user.authorities[0].name === 'ROLE_ADMIN'; // added to check if user is admin
-
   // If it does and they are not logged in, send the user to "/login"
-  if (requiresAuth && !isLoggedIn) {
+  if (requiresAuth && store.state.toke === '') {
     next("/login");
-  } else if (requiresAdmin && !isAdmin) {
-    next("/"); // added to redirect to home if not admin
+  } else if (requiresAdmin) {
+    const isAdmin = store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false);
+    if (!isAdmin) {
+      next("/");
+    } else {
+      next();
+    }
   } else {
     // Else let them go to their next destination
     next();
