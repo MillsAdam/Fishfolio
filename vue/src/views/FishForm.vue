@@ -1,13 +1,19 @@
 <template>
     <div>
-        <div class="form-row">
-            <button @click="toggleCreateFishForm">Create Fish Form</button>
-            <button @click="toggleUpdateFishForm">Update Fish Form</button>
-            <button @click="toggleDeleteFishForm">Delete Fish Form</button>
-        </div>
+        <b-row>
+            <b-col>
+                <button @click="toggleCreateFishForm">Create Fish</button>
+            </b-col>
+            <b-col>
+                <button @click="toggleUpdateFishForm">Update Fish</button>
+            </b-col>
+            <b-col>
+                <button @click="toggleDeleteFishForm">Delete Fish</button>
+            </b-col>
+        </b-row>
 
-        <div class="form-row" v-if="showCreateFishForm">
-            <form @submit.prevent="createFishForm" class="form-group">
+        <b-col v-if="showCreateFishForm">
+            <form @submit.prevent="createFishForm">
                 <input v-model="name" type="text" class="form-control" id="name" placeholder="Enter Name">
                 <input v-model="type" type="text" class="form-control" id="type" placeholder="Enter Type">
                 <input v-model="length" type="text" class="form-control" id="length" placeholder="Enter Length">
@@ -16,15 +22,19 @@
                 <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
                 <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
-                <div class="form-row">
-                    <button type="submit">Create Fish</button>
-                    <button type="button" @click="resetForm">Reset Form</button>
-                </div>
+                <b-row>
+                    <b-col>
+                        <button type="submit">Create Fish</button>
+                    </b-col>
+                    <b-col>
+                        <button type="button" @click="resetForm">Reset Form</button>
+                    </b-col>
+                </b-row>
             </form>
-        </div>
+        </b-col>
 
-        <div class="form-row" v-if="showUpdateFishForm">
-            <form @submit.prevent="updateFishForm" class="form-group">
+        <b-col v-if="showUpdateFishForm">
+            <form @submit.prevent="updateFishForm">
                 <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
                 <input v-model="name" type="text" class="form-control" id="name" placeholder="Enter Name">
                 <input v-model="type" type="text" class="form-control" id="type" placeholder="Enter Type">
@@ -34,22 +44,30 @@
                 <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
                 <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
-                <div class="form-row">
-                    <button type="submit">Update Fish</button>
-                    <button type="button" @click="resetForm">Reset Form</button>
-                </div>
+                <b-row>
+                    <b-col>
+                        <button type="submit">Update Fish</button>
+                    </b-col>
+                    <b-col>
+                        <button type="button" @click="resetForm">Reset Form</button>
+                    </b-col>
+                </b-row>
             </form>
-        </div>
+        </b-col>
 
-        <div class="form-row" v-if="showDeleteFishForm">
-            <form @submit.prevent="deleteFishForm" class="form-group">
+        <b-col v-if="showDeleteFishForm">
+            <form @submit.prevent="deleteFishForm">
                 <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
-                <div class="form-row">
-                    <button type="submit">Delete Fish</button>
-                    <button type="button" @click="resetForm">Reset Form</button>
-                </div>
+                <b-row>
+                    <b-col>
+                        <button type="submit">Delete Fish</button> 
+                    </b-col>
+                    <b-col>
+                        <button type="button" @click="resetForm">Reset Form</button>
+                    </b-col>
+                </b-row>
             </form>
-        </div>
+        </b-col>
 
         <div v-if="successMessage" class="success-message">
             <p>{{ successMessage }}</p>
@@ -67,7 +85,7 @@
                         <th scope="col">Location</th>
                         <th scope="col">Lure Used</th>
                         <th scope="col">Date Caught</th>
-                        <th scope="col">Image</th>
+                        <!-- <th scope="col">Image</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -80,7 +98,7 @@
                         <td>{{ fish.location }}</td>
                         <td>{{ fish.lureUsed }}</td>
                         <td>{{ fish.dateCaught }}</td>
-                        <td><img :src="fish.image" alt="fish image" width="100" height="100"></td>
+                        <!-- <td><img :src="fish.image" alt="fish image" width="100" height="100"></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -244,17 +262,10 @@ export default {
 </script>
 
 <style scoped>
-select, input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
 
 button {
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 0px;
 }
 
 </style>

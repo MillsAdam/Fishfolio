@@ -1,43 +1,43 @@
 <template>
     <div>
         <form @submit.prevent="searchHistory">
-            <div class="form-row">
-
-                <div class="form-group">
+            <b-row>
+                <b-col>
                     <label for="history">History ID</label>
-                    <input v-model="trackingHistoryId" type="text" class="form-control" id="history" placeholder="Enter History ID">
-                </div>
+                    <input v-model="trackingHistoryId" type="text" class="form-control" id="history" placeholder="Enter History ID"> 
+                </b-col>
 
-                <div class="form-group">
+                <b-col cols="auto">
+                    <label for="date">Date</label>
+                    <div class="datePicker">
+                        <b-form-datepicker
+                            v-model="selectedDate"
+                            @input="onDateSelected"
+                            :start-view="'year'"
+
+                            :max="new Date()"
+                            :value-as-date="true"
+                            button-only
+                            right
+                            class="mb-2"
+                        ></b-form-datepicker>
+                    </div>
+                </b-col>
+
+                <b-col>
                     <label for="fishId">Fish ID</label>
                     <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
-                </div>
+                </b-col>
+            </b-row>
 
-            </div>
-            <div class="form-row">
-
-                <div class="form-group">
-                    <label for="month">Month</label>
-                    <select v-model="month" class="form-control" id="month">
-                        <option v-for="(monthOption, index) in monthOptions" :key="monthOption" :value="String(index + 1).padStart(2, 0)">{{ monthOption }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="year">Year</label>
-                    <select v-model="year" class="form-control" id="year">
-                        <option v-for="yearOption in yearOptions" :key="yearOption">{{ yearOption }}</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <button type="submit">Apply Filters</button>
-                    <button type="button" @click="clearFilters">Clear Filters</button>
-                </div>
-            </div>
+            <b-row>
+                <b-col>
+                    <button type="submit" class="w-100">Apply Filters</button>
+                </b-col>
+                <b-col>
+                    <button type="button" class="w-100" @click="clearFilters">Clear Filters</button>
+                </b-col>
+            </b-row>
 
         </form>
 
@@ -72,8 +72,13 @@
 
 <script>
 import TrackingHistoryService from "../services/TrackingHistoryService.js";
+import { BFormDatepicker } from 'bootstrap-vue'
 
 export default {
+    components: {
+        BFormDatepicker
+    }, 
+
     data() {
         return {
             historyList: [],
@@ -83,6 +88,7 @@ export default {
             fishId: "",
             month: "",
             year: "",
+            selectedDate: "",
         }
     },
 
@@ -158,6 +164,16 @@ export default {
             } catch (error) {
                 console.error('Error finding history', error);
             }
+        }, 
+
+        onDateSelected(newDate) {
+            const selectedMonth = newDate.getMonth() + 1;
+            const selectedYear = newDate.getFullYear();
+
+            this.month = String(selectedMonth).padStart(2, 0);
+            this.year = selectedYear;
+            
+            this.searchHistory();
         }
     },
 
@@ -168,17 +184,10 @@ export default {
 </script>
 
 <style scoped>
-select, input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
 
 button {
-  width: 100%;
-  margin-top: 10px;
+    width: 100%;
+    margin: 10px 0px;
 }
 
 </style>

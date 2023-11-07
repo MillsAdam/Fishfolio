@@ -1,45 +1,44 @@
 <template>
     <div>
         <form @submit.prevent="searchInventory">
-            <div class="form-row">
-
-                <div class="form-group">
+            <b-row>
+                <b-col>
                     <label for="sorting">Sort By</label>
                     <select v-model="sortBy" class="form-control" id="sortBy">
                         <option v-for="sortOption in sortOptions" :key="sortOption">{{ sortOption }}</option>
                     </select>
-                </div>
+                </b-col>
 
-                <div class="form-group">
+                <b-col>
                     <label for="fishId">Fish ID</label>
                     <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
-                </div>
-            
-            </div>
-            <div class="form-row">
+                </b-col>
+            </b-row>
 
-                <div class="form-group">
+            <b-row>
+                <b-col>
                     <label for="type">Type</label>
                     <select v-model="type" class="form-control" id="type">
                         <option v-for="fishType in fishTypes" :key="fishType">{{ fishType }}</option>
                     </select>
-                </div>
+                </b-col>
 
-                <div class="form-group">
+                <b-col>
                     <label for="location">Location</label>
                     <select v-model="location" class="form-control" id="location">
                         <option v-for="fishLocation in fishLocations" :key="fishLocation">{{ fishLocation }}</option>
                     </select>
-                </div>
-                
-            </div>
+                </b-col>               
+            </b-row>
             
-            <div class="form-group">
-                <div class="form-row">
+            <b-row>
+                <b-col>
                     <button type="submit">Apply Filters</button>
+                </b-col>
+                <b-col>
                     <button type="button" @click="clearFilters">Clear Filters</button>
-                </div>
-            </div>
+                </b-col>
+            </b-row>
             
         </form>
 
@@ -55,7 +54,7 @@
                         <th scope="col">Location</th>
                         <th scope="col">Lure Used</th>
                         <th scope="col">Date Caught</th>
-                        <th scope="col">Image</th>
+                        <!-- <th scope="col">Image</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +67,7 @@
                         <td>{{ fish.location }}</td>
                         <td>{{ fish.lureUsed }}</td>
                         <td>{{ fish.dateCaught }}</td>
-                        <td><img :src="fish.image" alt="fish image" width="100" height="100"></td>
+                        <!-- <td><img :src="fish.image" alt="fish image" width="100" height="100"></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -202,17 +201,10 @@ export default {
 </script>
 
 <style scoped>
-select, input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
 
 button {
   width: 100%;
-  margin-top: 10px;
+  margin: 10px 0px;
 }
 
 </style>

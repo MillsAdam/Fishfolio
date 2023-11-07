@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && store.state.toke === '') {
     next("/login");
   } else if (requiresAdmin) {
-    const isAdmin = store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false);
+    const isAdmin = store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false); // added to check if user is admin
     if (!isAdmin) {
       next("/");
     } else {
