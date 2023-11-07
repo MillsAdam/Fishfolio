@@ -99,59 +99,61 @@ export default {
     }, 
 
     methods: {
-        searchInventory() {
+        async searchInventory() {
             console.log("Sorting By:", this.sortBy);
             console.log("Fish ID:", this.fishId);
             console.log("Type:", this.type);
             console.log("Location:", this.location);
             console.log("");
 
-            if (this.fishId != "") {
-                FishService.getFish({
-                    fishId: this.fishId
-                }).then(response => {
-                    console.log('Response', response.data)
+            try {
+                if (this.fishId != "") {
+                    const response = await FishService.getFish({
+                        fishId: this.fishId
+                    });
+                    if (response.data.length === 0) {
+                        console.log('No fish found with the provided Fish ID');
+                        this.fishList = [];
+                    } else {
+                        console.log('Fish found', response.data);
+                        this.fishList = response.data;
+                    }
+                } else if (this.type != "") {
+                    const response = await FishService.getFish({
+                        type: this.type
+                    });
+                    console.log('Fish found', response.data);
                     this.fishList = response.data;
-                }).catch(error => {
-                    console.log('Error:', error);
-                });
-            } else if (this.type != "") {
-                FishService.getFish({
-                    type: this.type
-                }).then(response => {
-                    console.log('Response', response.data)
+                } else if (this.location != "") {
+                    const response = await FishService.getFish({
+                        location: this.location
+                    });
+                    console.log('Fish found', response.data);
                     this.fishList = response.data;
-                }).catch(error => {
-                    console.log('Error:', error);
-                });
-            } else if (this.location != "") {
-                FishService.getFish({
-                    location: this.location
-                }).then(response => {
-                    console.log('Response', response.data)
+                } else if (this.sortBy != "") {
+                    const response = await FishService.getFish({
+                        sortBy: this.sortBy
+                    });
+                    console.log('Fish found', response.data);
                     this.fishList = response.data;
-                }).catch(error => {
-                    console.log('Error:', error);
-                });
-            } else if (this.sortBy != "") {
-                FishService.getFish({
-                    sortBy: this.sortBy
-                }).then(response => {
-                    console.log('Response', response.data)
+                } else {
+                    const response = await FishService.getFish({});
+                    console.log('Fish found', response.data);
                     this.fishList = response.data;
-                }).catch(error => {
-                    console.log('Error:', error);
-                });
-            } else {
-                FishService.getFish({}).then(response => {
-                    console.log('Response', response.data)
-                    this.fishList = response.data;
-                }).catch(error => {
-                    console.log('Error:', error);
-                });
+                }
+                this.resetFilters(); // keep or delete?
+            } catch (error) {
+                console.log('Error finding fish', error);
             }
+            
         },
 
+        resetFilters() {
+            this.fishId = "";
+            this.type = "";
+            this.location = "";
+            this.sortBy = "";
+        },
 
         clearFilters() {
             this.fishId = "";
@@ -177,69 +179,40 @@ export default {
             }).catch(error => {
                 console.log('Error:', error);
             });
+        },
+
+        async refreshFishList() {
+            try {
+                const response = await FishService.getFish({});
+                console.log('Fish found', response.data)
+                this.fishList = response.data;
+            } catch (error) {
+                console.log('Error refreshing fish list:', error);
+            }
         }
     },
 
     created() {
         this.getFishTypes();
         this.getFishLocations();
-        FishService.getFish({}).then(response => {
-            console.log('Response', response.data)
-            this.fishList = response.data;
-        }).catch(error => {
-            console.log('Error:', error);
-        });
+        this.refreshFishList();
     }
 }
 
 </script>
 
 <style scoped>
+select, input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
 button {
   width: 100%;
   margin-top: 10px;
 }
 
-.table-container {
-    width: 100%;
-    max-width: 100%;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-table {
-    margin-top: 10px;
-    width: 100%;
-    min-width: 100%;
-}
-
-th {
-    background-color: #343a40;
-    color: white;
-    font-weight: bold;
-    padding: 10px 0px;
-}
-
-.table-headers{
-    font-size: 15px;
-}
-.table-columns {
-    cursor: pointer;
-    font-size: 13px;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(odd) {
-    background-color: #ffffff;
-}
-
-td {
-    /* padding-top: 10px; */
-    padding: 10px 5px 0px 5px;
-    border: 1px solid #ddd;
-    font-size: 15px;
-}
 </style>

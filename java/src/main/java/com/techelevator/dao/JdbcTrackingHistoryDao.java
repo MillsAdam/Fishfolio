@@ -23,7 +23,7 @@ public class JdbcTrackingHistoryDao implements TrackingHistoryDao{
     @Override
     public List<TrackingHistory> getTrackingHistory() {
         List<TrackingHistory> trackingHistoryList = new ArrayList<>();
-        String sql = "SELECT * FROM fish_tracking_history";
+        String sql = "SELECT * FROM fish_tracking_history ORDER BY tracking_history_id";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);

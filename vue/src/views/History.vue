@@ -87,49 +87,59 @@ export default {
     },
 
     methods: {
-        searchHistory() {
+        async searchHistory() {
             console.log("History ID:", this.trackingHistoryId);
             console.log("Fish ID:", this.fishId);
             console.log("Month:", this.month);
             console.log("Year:", this.year);
             console.log("");
 
-            if (this.trackingHistoryId != "") {
-                TrackingHistoryService.getTrackingHistory({
-                    trackingHistoryId: this.trackingHistoryId
-                }).then(response => {
-                    console.log('Response', response.data)
+            try {
+                if (this.trackingHistoryId != "") {
+                    const response = await TrackingHistoryService.getTrackingHistory({
+                        trackingHistoryId: this.trackingHistoryId
+                    });
+                    if (response.data.length == 0) {
+                        console.log('No history found for the provided History ID');
+                        this.historyList = [];
+                    } else {
+                        console.log('History found', response.data);
+                        this.historyList = response.data;
+                    }
+                } else if (this.fishId != "") {
+                    const response = await TrackingHistoryService.getTrackingHistory({
+                        fishId: this.fishId
+                    });
+                    if (response.data.length == 0) {
+                        console.log('No history found for the provided Fish ID');
+                        this.historyList = [];
+                    } else {
+                        console.log('History found', response.data);
+                        this.historyList = response.data;
+                    }
+                } else if (this.month != "" && this.year != "") {
+                    const response = await TrackingHistoryService.getTrackingHistory({
+                        month: this.month,
+                        year: this.year
+                    });
+                    console.log('History found', response.data);
                     this.historyList = response.data;
-                }).catch(error => {
-                    console.log('Error', error.response)
-                });
-            } else if (this.fishId != "") {
-                TrackingHistoryService.getTrackingHistory({
-                    fishId: this.fishId
-                }).then(response => {
-                    console.log('Response', response.data)
+                } else {
+                    const response = await TrackingHistoryService.getTrackingHistory({});
+                    console.log('History found', response.data);
                     this.historyList = response.data;
-                }).catch(error => {
-                    console.log('Error', error.response)
-                });
-            } else if (this.month != "" && this.year != "") {
-                TrackingHistoryService.getTrackingHistory({
-                    month: this.month,
-                    year: this.year
-                }).then(response => {
-                    console.log('Response', response.data)
-                    this.historyList = response.data;
-                }).catch(error => {
-                    console.log('Error', error.response)
-                });
-            } else {
-                TrackingHistoryService.getTrackingHistory({}).then(response => {
-                    console.log('Response', response.data)
-                    this.historyList = response.data;
-                }).catch(error => {
-                    console.log('Error', error.response)
-                });
+                }
+                this.resetFilters(); // keep or delete?
+            } catch (error) {
+                console.error('Error finding history', error);
             }
+        },
+
+        resetFilters() {
+            this.trackingHistoryId = "";
+            this.fishId = "";
+            this.month = "";
+            this.year = "";
         },
 
         clearFilters() {
@@ -138,66 +148,37 @@ export default {
             this.month = "";
             this.year = "";
             this.searchHistory();
+        }, 
+
+        async refreshHistoryList() {
+            try {
+                const response = await TrackingHistoryService.getTrackingHistory({});
+                console.log('History found', response.data);
+                this.historyList = response.data;
+            } catch (error) {
+                console.error('Error finding history', error);
+            }
         }
     },
 
     created() {
-        TrackingHistoryService.getTrackingHistory({}).then(response => {
-            console.log('Response', response.data)
-            this.historyList = response.data;
-        }).catch(error => {
-            console.log('Error', error.response)
-        });
+        this.refreshHistoryList();
     }
 }
 </script>
 
 <style scoped>
+select, input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
 button {
   width: 100%;
   margin-top: 10px;
 }
 
-.table-container {
-    width: 100%;
-    max-width: 100%;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-table {
-    margin-top: 10px;
-    width: 100%;
-    min-width: 100%;
-}
-
-th {
-    background-color: #343a40;
-    color: white;
-    font-weight: bold;
-    padding: 10px 0px;
-}
-
-.table-headers{
-    font-size: 15px;
-}
-.table-columns {
-    cursor: pointer;
-    font-size: 13px;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(odd) {
-    background-color: #ffffff;
-}
-
-td {
-    /* padding-top: 10px; */
-    padding: 10px 5px 0px 5px;
-    border: 1px solid #ddd;
-    font-size: 15px;
-}
 </style>

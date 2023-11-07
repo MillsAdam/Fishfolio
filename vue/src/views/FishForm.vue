@@ -18,7 +18,7 @@
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
                 <div class="form-row">
                     <button type="submit">Create Fish</button>
-                    <button @click="resetForm">Reset Form</button>
+                    <button type="button" @click="resetForm">Reset Form</button>
                 </div>
             </form>
         </div>
@@ -36,7 +36,7 @@
                 <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
                 <div class="form-row">
                     <button type="submit">Update Fish</button>
-                    <button @click="resetForm">Reset Form</button>
+                    <button type="button" @click="resetForm">Reset Form</button>
                 </div>
             </form>
         </div>
@@ -46,7 +46,7 @@
                 <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
                 <div class="form-row">
                     <button type="submit">Delete Fish</button>
-                    <button @click="resetForm">Reset Form</button>
+                    <button type="button" @click="resetForm">Reset Form</button>
                 </div>
             </form>
         </div>
@@ -55,8 +55,38 @@
             <p>{{ successMessage }}</p>
         </div>
 
+        <div v-if="fishList.length > 0" class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="table-headers">
+                        <th scope="col">Fish ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Length</th>
+                        <th scope="col">Weight</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Lure Used</th>
+                        <th scope="col">Date Caught</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="fish in fishList" :key="fish.id">
+                        <td>{{ fish.fishId }}</td>
+                        <td>{{ fish.name }}</td>
+                        <td>{{ fish.type }}</td>
+                        <td>{{ fish.length }}</td>
+                        <td>{{ fish.weight }}</td>
+                        <td>{{ fish.location }}</td>
+                        <td>{{ fish.lureUsed }}</td>
+                        <td>{{ fish.dateCaught }}</td>
+                        <td><img :src="fish.image" alt="fish image" width="100" height="100"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
-    
 </template>
 
 <script>
@@ -65,6 +95,7 @@ import FishService from '@/services/FishService.js'
 export default {
     data() {
         return {
+            fishList: [],
             fishId: '',
             name: '',
             type: '',
@@ -102,6 +133,7 @@ export default {
                 }, 3000);
 
                 this.resetForm();
+                this.refreshFishList();
             } catch (error) {
                 console.error('Error creating fish', error);
             }
@@ -128,6 +160,7 @@ export default {
                 }, 3000);
 
                 this.resetForm();
+                this.refreshFishList();
             } catch (error) {
                 console.error('Error updating fish', error);
             }
@@ -143,6 +176,7 @@ export default {
                 }, 3000);
 
                 this.resetForm();
+                this.refreshFishList();
             } catch (error) {
                 console.error('Error deleting fish', error);
             }
@@ -180,12 +214,44 @@ export default {
             this.showUpdateFishForm = false;
             this.resetForm();
         },
-        
+
+        async refreshFishList() {
+            try {
+                const response = await FishService.getFish({});
+                console.log('Fish found', response.data)
+                this.fishList = response.data;
+            } catch (error) {
+                console.log('Error finding fish', error);
+            }
+        }, 
+
+        async getFishById(fishId) {
+            try {
+                const response = await FishService.getFishById(fishId);
+                console.log('Fish found', response.data)
+                this.fishList = response.data;
+            } catch (error) {
+                console.log('Error finding fish', error);
+            }
+            
+        },
+    },
+
+    created() {
+        this.refreshFishList();
     },
 }
 </script>
 
 <style scoped>
+select, input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
 button {
   width: 100%;
   margin-top: 10px;

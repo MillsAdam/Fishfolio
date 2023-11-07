@@ -23,7 +23,7 @@ public class JdbcFishDao implements FishDao{
     @Override
     public List<Fish> getFish() {
         List<Fish> fishList = new ArrayList<>();
-        String sql = "SELECT * FROM fish_inventory";
+        String sql = "SELECT * FROM fish_inventory ORDER BY fish_id";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);

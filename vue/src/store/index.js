@@ -11,6 +11,7 @@ Vue.use(Vuex)
  */
 const currentToken = localStorage.getItem('token')
 const currentUser = JSON.parse(localStorage.getItem('user'));
+const currentRole = localStorage.getItem('role'); // added to save role to localStorage
 
 if(currentToken != null) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
@@ -20,6 +21,7 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
+    role: currentRole || '',
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -28,15 +30,24 @@ export default new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     },
     SET_USER(state, user) {
+      console.log('Committing user: ', user); // added to check role
       state.user = user;
       localStorage.setItem('user',JSON.stringify(user));
+      if (user.authorities && user.authorities.length > 0) {
+        state.user.authorities = user.authorities;
+        state.role = user.authorities[0].name;
+        localStorage.setItem('role', state.role); // added to save role to localStorage
+      } // added to set role
     },
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('role'); // added to remove role
+      delete axios.defaults.headers.common['Authorization']; // added to remove role
       state.token = '';
       state.user = {};
-      axios.defaults.headers.common = {};
+      state.role = ''; // added to remove role
+      // axios.defaults.headers.common = {};  // removed for redundancy
     }
   }
 })

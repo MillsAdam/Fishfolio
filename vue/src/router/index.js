@@ -7,8 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Inventory from '../views/Inventory.vue'
 import History from '../views/History.vue'
-import FishForm from '../components/FishForm.vue'
-import HistoryForm from '../components/HistoryForm.vue'
+import FishForm from '../views/FishForm.vue'
+import HistoryForm from '../views/HistoryForm.vue'
 
 Vue.use(Router)
 
@@ -78,7 +78,7 @@ const router = new Router({
       name: "fish-form",
       component: FishForm,
       meta: {
-        requiresAuth: true
+        requiresAdmin: true
       }
     },
     {
@@ -86,7 +86,7 @@ const router = new Router({
       name: "history-form",
       component: HistoryForm,
       meta: {
-        requiresAuth: true
+        requiresAdmin: true
       }
     },
   ]
@@ -95,10 +95,16 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  const requiresAdmin = to.matched.some(x => x.meta.requiresAdmin);
+
+  const isLoggedIn = store.state.token !== ''; // added to check if user is logged in
+  const isAdmin = store.state.user.authorities[0].name === 'ROLE_ADMIN'; // added to check if user is admin
 
   // If it does and they are not logged in, send the user to "/login"
-  if (requiresAuth && store.state.token === '') {
+  if (requiresAuth && !isLoggedIn) {
     next("/login");
+  } else if (requiresAdmin && !isAdmin) {
+    next("/"); // added to redirect to home if not admin
   } else {
     // Else let them go to their next destination
     next();

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,6 +27,7 @@ public class TrackingHistoryController {
         this.trackingHistoryService = trackingHistoryService;
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public List<TrackingHistory> getTrackingHistory (
             @RequestParam(required = false) Integer trackingHistoryId,
@@ -47,13 +49,15 @@ public class TrackingHistoryController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path="/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     public TrackingHistory createTrackingHistory(@Valid @RequestBody TrackingHistory trackingHistory) {
         return trackingHistoryService.createTrackingHistory(trackingHistory);
     }
 
-    @RequestMapping(path="/update/{trackingHistoryId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("/update/{trackingHistoryId}")
     public TrackingHistory updateTrackingHistory(@Valid @RequestBody TrackingHistory trackingHistory, @PathVariable int trackingHistoryId) {
         trackingHistory.setTrackingHistoryId(trackingHistoryId);
         try {
@@ -63,8 +67,9 @@ public class TrackingHistoryController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path="/delete/{trackingHistoryId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/delete/{trackingHistoryId}")
     public void deleteTrackingHistory(@PathVariable int trackingHistoryId) {
         trackingHistoryService.deleteTrackingHistoryById(trackingHistoryId);
     }

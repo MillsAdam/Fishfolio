@@ -22,7 +22,7 @@ export default {
         return http.get("/locations");
     },
 
-    get(fishId) {
+    getFishById(fishId) {
         return http.get(`/${fishId}`);
     },
 

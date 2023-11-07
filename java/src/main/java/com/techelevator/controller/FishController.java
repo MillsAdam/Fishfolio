@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,6 +26,7 @@ public class FishController {
         this.fishService = fishService;
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public List<Fish> getFish (
             @RequestParam(required = false) Integer fishId,
@@ -54,13 +56,21 @@ public class FishController {
         return fishService.getFish();
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/{fishId}")
+    public Fish getFishById(@Valid @PathVariable int fishId) {
+        return fishService.getFishById(fishId);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path="/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     public Fish createFish(@Valid @RequestBody Fish fish) {
         return fishService.createFish(fish);
     }
 
-    @RequestMapping(path="/update/{fishId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping("/update/{fishId}")
     public Fish updateFish(@Valid @RequestBody Fish fish, @PathVariable int fishId) {
         fish.setFishId(fishId);
         try {
@@ -70,21 +80,20 @@ public class FishController {
         }
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path="/delete/{fishId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/delete/{fishId}")
     public void deleteFish(@PathVariable int fishId) {
         fishService.deleteFishById(fishId);
     }
 
 
-    @GetMapping
-    @RequestMapping(path="/types", method = RequestMethod.GET)
+    @GetMapping("/types")
     public List<String> getFishTypes() {
         return fishService.getFishTypes();
     }
 
-    @GetMapping
-    @RequestMapping(path="/locations", method = RequestMethod.GET)
+    @GetMapping("/locations")
     public List<String> getFishLocations() {
         return fishService.getFishLocations();
     }
