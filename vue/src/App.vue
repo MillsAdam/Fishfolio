@@ -28,7 +28,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     font-size: 12px;
-    padding: 8px 16px;
+    padding: 16px 16px;
 }
 
 button {

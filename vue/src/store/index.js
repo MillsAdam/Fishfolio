@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import FishService from '@/services/FishService.js';
 
 Vue.use(Vuex)
 
@@ -20,6 +21,11 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
+    fishList: [],
+    filteredFishList: [],
+    currentIndex: 0,
+    fishTypes: [],
+    fishLocations: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +43,74 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_FISH_LIST(state, payload) {
+      state.fishList = payload;
+    },
+    SET_FILTERED_FISH_LIST(state, payload) {
+      state.filteredFishList = payload;
+    },
+    RESET_FISH_LIST(state) {
+      state.fishList = [];
+    },
+    RESET_FILTERED_FISH_LIST(state) {
+      state.filteredFishList = [];
+    },
+    RESET_CURRENT_INDEX(state) {
+      state.currentIndex = 0;
+    },
+    INCREMENT_CURRENT_INDEX(state) {
+      state.currentIndex++;
+    },
+    DECREMENT_CURRENT_INDEX(state) {
+      state.currentIndex--;
+    },
+    SET_FISH_TYPES(state, payload) {
+      state.fishTypes = payload;
+    },
+    SET_FISH_LOCATIONS(state, payload) {
+      state.fishLocations = payload;
+    }
+  },
+  actions: {
+    fetchFishList({ commit }) {
+      FishService.getFish({})
+      .then(response => {
+        commit('SET_FISH_LIST', response.data)
+      })
+      .catch(error => {
+        console.log('Error fetching fish', error);
+      });
+    },
+    searchFishList({ commit }, payload) {
+      console.log('Dispatch payload', payload);
+
+      FishService.getFish(payload)
+      .then(response => {
+        console.log('Filtered data received:', response.data);
+        commit('SET_FILTERED_FISH_LIST', response.data)
+      })
+      .catch(error => {
+        console.log('Error fetching fish', error);
+      });
+    },
+    getFishTypes({ commit }) {
+      FishService.getFishTypes()
+      .then(response => {
+        commit('SET_FISH_TYPES', response.data)
+      })
+      .catch(error => {
+        console.log('Error fetching fish types', error);
+      });
+    },
+    getFishLocations({ commit }) {
+      FishService.getFishLocations()
+      .then(response => {
+        commit('SET_FISH_LOCATIONS', response.data)
+      })
+      .catch(error => {
+        console.log('Error fetching fish locations', error);
+      });
     }
   }
 })

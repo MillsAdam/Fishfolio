@@ -156,11 +156,7 @@ export default {
         },
 
         clearFilters() {
-            this.trackingHistoryId = "";
-            this.fishId = "";
-            this.month = "";
-            this.year = "";
-            this.searchBy = "";
+            this.resetFilters();
             this.searchHistory();
         }, 
 

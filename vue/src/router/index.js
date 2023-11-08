@@ -9,6 +9,8 @@ import Inventory from '../views/Inventory.vue'
 import History from '../views/History.vue'
 import FishForm from '../views/FishForm.vue'
 import HistoryForm from '../views/HistoryForm.vue'
+import Info from '../views/Info.vue'
+import InfoCard from '../components/InfoCard.vue'
 
 Vue.use(Router)
 
@@ -89,6 +91,22 @@ const router = new Router({
       meta: {
         requiresAuth: true,
         requiresAdmin: true
+      }
+    },
+    {
+      path: "/info",
+      name: "info",
+      component: Info,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/info-card",
+      name: "info-card",
+      component: InfoCard,
+      meta: {
+        requiresAuth: true
       }
     },
   ]

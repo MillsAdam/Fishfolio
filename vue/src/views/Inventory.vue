@@ -72,7 +72,7 @@
                         <td>{{ fish.location }}</td>
                         <td>{{ fish.lureUsed }}</td>
                         <td>{{ fish.dateCaught }}</td>
-                        <!-- <td><img :src="fish.image" alt="fish image" width="100" height="100"></td> -->
+                        <!-- <td><img :src="fish.imageUrl" alt="fish image" width="100" height="100"></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -118,6 +118,7 @@ export default {
                         fishId: this.fishId
                     });
                     if (response.data.length === 0) {
+                        // it doesn't get a response when there is no fish for the given fishId
                         console.log('No fish found with the provided Fish ID');
                         this.fishList = [];
                     } else {
@@ -163,11 +164,7 @@ export default {
         },
 
         clearFilters() {
-            this.fishId = "";
-            this.type = "";
-            this.location = "";
-            this.sortBy = "";
-            this.searchBy = "";
+            this.resetFilters();
             this.searchInventory();
         },
 

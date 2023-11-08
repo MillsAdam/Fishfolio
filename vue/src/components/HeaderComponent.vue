@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div class="header-container">
         <div id="nav">
             <router-link v-bind:to="{ name: 'home' }">Home</router-link>
 
@@ -7,9 +7,10 @@
                 <router-link v-bind:to="{ name: 'login' }">Login</router-link>
                 <router-link v-bind:to="{ name: 'register' }">Register</router-link>
             </template>
-      
+        
             <template v-if="isLoggedIn">
                 <router-link v-bind:to="{ name: 'logout' }" >Logout</router-link>
+                <router-link v-bind:to="{ name: 'info' }">Info</router-link>
 
                 <div class="dropdown">
                     <button class="dropbtn">Data</button>
@@ -32,6 +33,7 @@
             
         </div>
     </div>
+    
 </template>
 
 <script>
@@ -62,12 +64,16 @@ export default {
 #nav > a, .dropbtn {
     background-color: #2c3e50;
     color: white;
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 12px;
     border: none;
     cursor: pointer;
     text-decoration: none;
-    margin: 0 5px;
+    margin: 0 2px;
+}
+
+#nav > a {
+    padding: 10px 14px;
 }
 
 .dropdown {
@@ -80,7 +86,7 @@ export default {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 14px 0px rgba(0,0,0,0.2);
     z-index: 1;
     right: 0;
 }
