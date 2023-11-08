@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.exception.GlobalExceptionHandler;
 import com.techelevator.model.Fish;
 import com.techelevator.service.FishService;
 import org.slf4j.Logger;
@@ -39,7 +40,13 @@ public class FishController {
 
 
         if (fishId != null) {
-            return List.of(fishService.getFishById(fishId));
+            try {
+                return List.of(fishService.getFishById(fishId));
+            } catch (ResponseStatusException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fish not found", e);
+            } catch (Exception e) {
+                throw e;
+            }
         } else if (type != null) {
             return fishService.getFishByType(type);
         } else if (location != null) {

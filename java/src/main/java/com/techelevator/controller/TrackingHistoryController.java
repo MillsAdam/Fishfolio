@@ -39,9 +39,21 @@ public class TrackingHistoryController {
                 trackingHistoryId, fishId, month, year);
 
         if (trackingHistoryId != null) {
-            return List.of(trackingHistoryService.getTrackingHistoryById(trackingHistoryId));
+            try {
+                return List.of(trackingHistoryService.getTrackingHistoryById(trackingHistoryId));
+            } catch (ResponseStatusException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "History not found", e);
+            } catch (Exception e) {
+                throw e;
+            }
         } else if (fishId != null ) {
-            return trackingHistoryService.getTrackingHistoryByFishId(fishId);
+            try {
+                return trackingHistoryService.getTrackingHistoryByFishId(fishId);
+            } catch (ResponseStatusException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "History not found", e);
+            } catch (Exception e) {
+                throw e;
+            }
         } else if (month != null && year != null) {
             return trackingHistoryService.getTrackingHistoryByMonthAndYear(month, year);
         } else {

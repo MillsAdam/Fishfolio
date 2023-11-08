@@ -92,8 +92,6 @@ export default {
         return {
             filteredFishList: [],
             fishList: [],
-            fishTypes: [],
-            fishLocations: [],
             sortOptions: ["Most Recent", "Oldest", "Most Popular"],
             fishId: "",
             type: "",
@@ -102,7 +100,21 @@ export default {
             searchBy: "",
             searchOptions: ['Sort By', 'Fish ID', 'Type', 'Location'],
         }
-    }, 
+    },
+
+    computed: {
+        fishTypes() {
+            this.$store.dispatch('getFishTypes');
+            return this.$store.state.fishTypes;
+        },
+        
+        fishLocations() {
+            this.$store.dispatch('getFishLocations');
+            return this.$store.state.fishLocations;
+        },
+
+    },
+    
 
     methods: {
         async searchInventory() {
@@ -114,17 +126,24 @@ export default {
 
             try {
                 if (this.fishId != "") {
-                    const response = await FishService.getFish({
-                        fishId: this.fishId
-                    });
-                    if (response.data.length === 0) {
-                        // it doesn't get a response when there is no fish for the given fishId
-                        console.log('No fish found with the provided Fish ID');
+                    try {
+                        const response = await FishService.getFish({
+                            fishId: this.fishId
+                        });
+                        if (response.data.length === 0) {
+                            console.log('No fish found with the provided Fish ID');
+                            this.fishList = [];
+                        } else {
+                            console.log('Fish found', response.data);
+                            this.fishList = response.data;
+                        }
+
+                    } catch (error) {
+                        console.error('An error occurred while fetching the fish data', error);
                         this.fishList = [];
-                    } else {
-                        console.log('Fish found', response.data);
-                        this.fishList = response.data;
                     }
+                    
+                    
                 } else if (this.type != "") {
                     const response = await FishService.getFish({
                         type: this.type
@@ -198,8 +217,6 @@ export default {
     },
 
     created() {
-        this.getFishTypes();
-        this.getFishLocations();
         this.refreshFishList();
     }
 }

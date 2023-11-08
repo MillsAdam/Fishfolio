@@ -26,6 +26,7 @@ export default new Vuex.Store({
     currentIndex: 0,
     fishTypes: [],
     fishLocations: [],
+    hasFishListBeenReset: false,
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -52,6 +53,7 @@ export default new Vuex.Store({
     },
     RESET_FISH_LIST(state) {
       state.fishList = [];
+      state.hasFishListBeenReset = true;
     },
     RESET_FILTERED_FISH_LIST(state) {
       state.filteredFishList = [];

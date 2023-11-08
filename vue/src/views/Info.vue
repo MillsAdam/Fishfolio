@@ -93,10 +93,12 @@ export default {
                             : this.$store.state.fishList;
             return listToUse[this.currentIndex] || null;
         },
+
         fishTypes() {
             this.$store.dispatch('getFishTypes');
             return this.$store.state.fishTypes;
         },
+
         fishLocations() {
             this.$store.dispatch('getFishLocations');
             return this.$store.state.fishLocations;
@@ -162,16 +164,10 @@ export default {
             this.resetFilters();
             this.$store.commit('RESET_FILTERED_FISH_LIST');
             this.$store.commit('RESET_FISH_LIST');
+            this.$store.commit('RESET_CURRENT_INDEX');
             this.$store.dispatch('fetchFishList');
         },
     },
-
-    created() {
-        this.getFishTypes();
-        this.getFishLocations();
-        this.$store.commit('RESET_FISH_LIST');
-        this.$store.dispatch('fetchFishList')
-    }
 }
 
 </script>
