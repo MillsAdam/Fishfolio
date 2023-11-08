@@ -64,7 +64,7 @@ export default {
     },
 
     created() {
-        console.log(this.$store.state.fishList);
+        // console.log(this.$store.state.fishList);
         // this.$store.commit('RESET_FISH_LIST');
         this.$store.dispatch("fetchFishList");
     },

@@ -101,11 +101,11 @@ export default {
 
     methods: {
         async searchHistory() {
-            console.log("History ID:", this.trackingHistoryId);
-            console.log("Fish ID:", this.fishId);
-            console.log("Month:", this.month);
-            console.log("Year:", this.year);
-            console.log("");
+            // console.log("History ID:", this.trackingHistoryId);
+            // console.log("Fish ID:", this.fishId);
+            // console.log("Month:", this.month);
+            // console.log("Year:", this.year);
+            // console.log("");
 
             try {
                 if (this.trackingHistoryId != "") {
@@ -113,10 +113,10 @@ export default {
                         trackingHistoryId: this.trackingHistoryId
                     });
                     if (response.data.length == 0) {
-                        console.log('No history found for the provided History ID');
+                        // console.log('No history found for the provided History ID');
                         this.historyList = [];
                     } else {
-                        console.log('History found', response.data);
+                        // console.log('History found', response.data);
                         this.historyList = response.data;
                     }
                 } else if (this.fishId != "") {
@@ -124,10 +124,10 @@ export default {
                         fishId: this.fishId
                     });
                     if (response.data.length == 0) {
-                        console.log('No history found for the provided Fish ID');
+                        // console.log('No history found for the provided Fish ID');
                         this.historyList = [];
                     } else {
-                        console.log('History found', response.data);
+                        // console.log('History found', response.data);
                         this.historyList = response.data;
                     }
                 } else if (this.month != "" && this.year != "") {
@@ -135,15 +135,16 @@ export default {
                         month: this.month,
                         year: this.year
                     });
-                    console.log('History found', response.data);
+                    // console.log('History found', response.data);
                     this.historyList = response.data;
                 } else {
                     const response = await TrackingHistoryService.getTrackingHistory({});
-                    console.log('History found', response.data);
+                    // console.log('History found', response.data);
                     this.historyList = response.data;
                 }
             } catch (error) {
-                console.error('Error finding history', error);
+                this.error = error;
+                // console.error('Error finding history', error);
             }
         },
 
@@ -163,10 +164,11 @@ export default {
         async refreshHistoryList() {
             try {
                 const response = await TrackingHistoryService.getTrackingHistory({});
-                console.log('History found', response.data);
+                // console.log('History found', response.data);
                 this.historyList = response.data;
             } catch (error) {
-                console.error('Error finding history', error);
+                this.error = error;
+                // console.error('Error finding history', error);
             }
         }, 
 

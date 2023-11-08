@@ -114,11 +114,11 @@ export default {
                 sortBy: this.sortBy
             };
 
-            console.log("Sorting By:", this.sortBy);
-            console.log("Fish ID:", this.fishId);
-            console.log("Type:", this.type);
-            console.log("Location:", this.location);
-            console.log("");
+            // console.log("Sorting By:", this.sortBy);
+            // console.log("Fish ID:", this.fishId);
+            // console.log("Type:", this.type);
+            // console.log("Location:", this.location);
+            // console.log("");
 
             // this.resetFilters();
 
@@ -138,7 +138,8 @@ export default {
                     await this.$store.dispatch('fetchFishList');
                 } 
             } catch (error) {
-                console.log('Error finding fish', error);
+                this.error = error;
+                // console.log('Error finding fish', error);
             }
 
             this.resetSearchCriteria(); // fix later

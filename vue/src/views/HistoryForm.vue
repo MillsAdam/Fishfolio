@@ -119,8 +119,8 @@ export default {
                     recordedLength: this.recordedLength,
                     recordedWeight: this.recordedWeight,
                 };
-                const response = await TrackingHistoryService.createTrackingHistory(newHistory);
-                console.log('History created', response.data);
+                await TrackingHistoryService.createTrackingHistory(newHistory);
+                // console.log('History created', response.data);
                 this.successMessage = 'History created!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -129,7 +129,8 @@ export default {
                 this.resetForm();
                 this.refreshHistoryList();
             } catch (error) {
-                console.error('Error creating history', error);
+                this.error = error;
+                // console.error('Error creating history', error);
             }
         },
 
@@ -142,8 +143,8 @@ export default {
                     recordedLength: this.recordedLength,
                     recordedWeight: this.recordedWeight,
                 }
-                const response = await TrackingHistoryService.updateTrackingHistory(this.trackingHistoryId, updateHistory);
-                console.log('History updated', response.data);
+                await TrackingHistoryService.updateTrackingHistory(this.trackingHistoryId, updateHistory);
+                // console.log('History updated', response.data);
                 this.successMessage = 'History updated!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -152,14 +153,15 @@ export default {
                 this.resetForm();
                 this.refreshHistoryList();
             } catch (error) {
-                console.error('Error updating history', error);
+                this.error = error;
+                // console.error('Error updating history', error);
             }
         },
 
         async deleteHistoryForm() {
             try {
-                const response = await TrackingHistoryService.deleteTrackingHistory(this.trackingHistoryId);
-                console.log('History deleted', response.data);
+                await TrackingHistoryService.deleteTrackingHistory(this.trackingHistoryId);
+                // console.log('History deleted', response.data);
                 this.successMessage = 'History deleted!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -168,7 +170,8 @@ export default {
                 this.resetForm();
                 this.refreshHistoryList();
             } catch (error) {
-                console.error('Error deleting history', error);
+                this.error = error;
+                // console.error('Error deleting history', error);
             }
         },
 
@@ -204,10 +207,11 @@ export default {
         async refreshHistoryList() {
             try {
                 const response = await TrackingHistoryService.getTrackingHistory({});
-                console.log('History found', response.data)
+                // console.log('History found', response.data)
                 this.historyList = response.data;
             } catch (error) {
-                console.error('Error refreshing fish list', error);
+                this.error = error;
+                // console.error('Error refreshing fish list', error);
             }
         }
     },

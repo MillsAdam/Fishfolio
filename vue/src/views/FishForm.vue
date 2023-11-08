@@ -143,8 +143,8 @@ export default {
                     dateCaught: this.dateCaught,
                     image: this.imageUrl,
                 };
-                const response = await FishService.createFish(newFish);
-                console.log('Fish created', response.data);
+                await FishService.createFish(newFish);
+                // console.log('Fish created', response.data);
                 this.successMessage = 'Fish created!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -153,7 +153,8 @@ export default {
                 this.resetForm();
                 this.refreshFishList();
             } catch (error) {
-                console.error('Error creating fish', error);
+                this.error = error;
+                // console.error('Error creating fish', error);
             }
         },
 
@@ -170,8 +171,8 @@ export default {
                     dateCaught: this.dateCaught,
                     image: this.imageUrl,
                 }
-                const response = await FishService.updateFish(this.fishId, updateFish);
-                console.log('Fish updated', response.data);
+                await FishService.updateFish(this.fishId, updateFish);
+                // console.log('Fish updated', response.data);
                 this.successMessage = 'Fish updated!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -180,14 +181,15 @@ export default {
                 this.resetForm();
                 this.refreshFishList();
             } catch (error) {
-                console.error('Error updating fish', error);
+                this.error = error;
+                // console.error('Error updating fish', error);
             }
         },
 
         async deleteFishForm() {
             try {
-                const response = await FishService.deleteFish(this.fishId);
-                console.log('Fish deleted', response.data);
+                await FishService.deleteFish(this.fishId);
+                // console.log('Fish deleted', response.data);
                 this.successMessage = 'Fish deleted!';
                 setTimeout(() => {
                     this.successMessage = '';
@@ -196,7 +198,8 @@ export default {
                 this.resetForm();
                 this.refreshFishList();
             } catch (error) {
-                console.error('Error deleting fish', error);
+                this.error = error;
+                // console.error('Error deleting fish', error);
             }
         },
 
@@ -236,20 +239,22 @@ export default {
         async refreshFishList() {
             try {
                 const response = await FishService.getFish({});
-                console.log('Fish found', response.data)
+                // console.log('Fish found', response.data)
                 this.fishList = response.data;
             } catch (error) {
-                console.log('Error finding fish', error);
+                this.error = error;
+                // console.log('Error finding fish', error);
             }
         }, 
 
         async getFishById(fishId) {
             try {
                 const response = await FishService.getFishById(fishId);
-                console.log('Fish found', response.data)
+                // console.log('Fish found', response.data)
                 this.fishList = response.data;
             } catch (error) {
-                console.log('Error finding fish', error);
+                this.error = error;
+                // console.log('Error finding fish', error);
             }
             
         },

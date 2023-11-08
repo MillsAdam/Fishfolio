@@ -118,11 +118,11 @@ export default {
 
     methods: {
         async searchInventory() {
-            console.log("Sorting By:", this.sortBy);
-            console.log("Fish ID:", this.fishId);
-            console.log("Type:", this.type);
-            console.log("Location:", this.location);
-            console.log("");
+            // console.log("Sorting By:", this.sortBy);
+            // console.log("Fish ID:", this.fishId);
+            // console.log("Type:", this.type);
+            // console.log("Location:", this.location);
+            // console.log("");
 
             try {
                 if (this.fishId != "") {
@@ -131,15 +131,16 @@ export default {
                             fishId: this.fishId
                         });
                         if (response.data.length === 0) {
-                            console.log('No fish found with the provided Fish ID');
+                            // console.log('No fish found with the provided Fish ID');
                             this.fishList = [];
                         } else {
-                            console.log('Fish found', response.data);
+                            // console.log('Fish found', response.data);
                             this.fishList = response.data;
                         }
 
                     } catch (error) {
-                        console.error('An error occurred while fetching the fish data', error);
+                        this.error = error;
+                        // console.error('An error occurred while fetching the fish data', error);
                         this.fishList = [];
                     }
                     
@@ -148,28 +149,29 @@ export default {
                     const response = await FishService.getFish({
                         type: this.type
                     });
-                    console.log('Fish found', response.data);
+                    // console.log('Fish found', response.data);
                     this.fishList = response.data;
                 } else if (this.location != "") {
                     const response = await FishService.getFish({
                         location: this.location
                     });
-                    console.log('Fish found', response.data);
+                    // console.log('Fish found', response.data);
                     this.fishList = response.data;
                 } else if (this.sortBy != "") {
                     const response = await FishService.getFish({
                         sortBy: this.sortBy
                     });
-                    console.log('Fish found', response.data);
+                    // console.log('Fish found', response.data);
                     this.fishList = response.data;
                 } else {
                     const response = await FishService.getFish({});
-                    console.log('Fish found', response.data);
+                    // console.log('Fish found', response.data);
                     this.fishList = response.data;
                 }
 
             } catch (error) {
-                console.log('Error finding fish', error);
+                this.error = error;
+                // console.log('Error finding fish', error);
             }
             
         },
@@ -189,29 +191,32 @@ export default {
 
         getFishTypes() {
             FishService.getFishTypes().then(response => {
-                console.log('Response', response.data)
+                // console.log('Response', response.data)
                 this.fishTypes = response.data;
             }).catch(error => {
-                console.log('Error:', error);
+                this.error = error;
+                // console.log('Error:', error);
             });
         }, 
 
         getFishLocations() {
             FishService.getFishLocations().then(response => {
-                console.log('Response', response.data)
+                // console.log('Response', response.data)
                 this.fishLocations = response.data;
             }).catch(error => {
-                console.log('Error:', error);
+                this.error = error;
+                // console.log('Error:', error);
             });
         },
 
         async refreshFishList() {
             try {
                 const response = await FishService.getFish({});
-                console.log('Fish found', response.data)
+                // console.log('Fish found', response.data)
                 this.fishList = response.data;
             } catch (error) {
-                console.log('Error refreshing fish list:', error);
+                this.error = error;
+                // console.log('Error refreshing fish list:', error);
             }
         }
     },

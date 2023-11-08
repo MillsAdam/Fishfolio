@@ -12,21 +12,21 @@
                 <router-link v-bind:to="{ name: 'logout' }" >Logout</router-link>
                 <router-link v-bind:to="{ name: 'info' }">Info</router-link>
 
-                <div class="dropdown">
+                <div class="dropdown" @click="toggleDropdown">
                     <button class="dropbtn">Data</button>
-                    <div class="dropdown-content">
-                        <router-link v-bind:to="{ name: 'inventory' }">Inventory</router-link>
-                        <router-link v-bind:to="{ name: 'history' }">History</router-link>
+                    <div class="dropdown-content" v-show="showDropdown">
+                        <router-link v-bind:to="{ name: 'inventory' }" @click.native.stop="closeDropdown">Inventory</router-link>
+                        <router-link v-bind:to="{ name: 'history' }" @click.native.stop="closeDropdown">History</router-link>
                     </div>
                 </div>
             </template>
             
             <template v-if="isAdmin">
-                <div class="dropdown">
+                <div class="dropdown" @click="toggleDropdown">
                     <button class="dropbtn">Forms</button>
-                    <div class="dropdown-content">
-                        <router-link v-bind:to="{ name: 'fish-form' }">Fish Form</router-link>
-                        <router-link v-bind:to="{ name: 'history-form' }">History Form</router-link>
+                    <div class="dropdown-content" v-show="showDropdown">
+                        <router-link v-bind:to="{ name: 'fish-form' }" @click.native.stop="closeDropdown">Fish Form</router-link>
+                        <router-link v-bind:to="{ name: 'history-form' }" @click.native.stop="closeDropdown">History Form</router-link>
                     </div>
                 </div>
             </template>
@@ -39,6 +39,22 @@
 <script>
 
 export default {
+    data () {
+        return {
+            showDropdown: false,
+        };
+    },
+
+    methods: {
+        toggleDropdown() {
+            this.showDropdown = !this.showDropdown;
+        },
+
+        closeDropdown() {
+            this.showDropdown = false;
+        },
+    },
+
     computed: {
         isLoggedOut() {
             return !this.isLoggedIn;
@@ -49,9 +65,9 @@ export default {
         isAdmin() {
             const isAdmin = this.$store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false);
 
-            console.log('User: ', this.$store.state.user);
-            console.log('Authorities: ', this.$store.state.user?.authorities);
-            console.log('Is Admin: ', isAdmin);
+            // console.log('User: ', this.$store.state.user);
+            // console.log('Authorities: ', this.$store.state.user?.authorities);
+            // console.log('Is Admin: ', isAdmin);
 
             return isAdmin;
         }

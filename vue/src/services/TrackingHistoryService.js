@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-    baseURL: "http://localhost:9000/api/tracking-history"
+    baseURL: "https://fishfolio-app-9ef287f0b901.herokuapp.com/api/tracking-history"
 })
 
 http.interceptors.request.use(function (config) {

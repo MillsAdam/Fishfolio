@@ -81,19 +81,21 @@ export default new Vuex.Store({
         commit('SET_FISH_LIST', response.data)
       })
       .catch(error => {
-        console.log('Error fetching fish', error);
+        this.error = error;
+        // console.log('Error fetching fish', error);
       });
     },
     searchFishList({ commit }, payload) {
-      console.log('Dispatch payload', payload);
+      // console.log('Dispatch payload', payload);
 
       FishService.getFish(payload)
       .then(response => {
-        console.log('Filtered data received:', response.data);
+        // console.log('Filtered data received:', response.data);
         commit('SET_FILTERED_FISH_LIST', response.data)
       })
       .catch(error => {
-        console.log('Error fetching fish', error);
+        this.error = error;
+        // console.log('Error fetching fish', error);
       });
     },
     getFishTypes({ commit }) {
@@ -102,7 +104,8 @@ export default new Vuex.Store({
         commit('SET_FISH_TYPES', response.data)
       })
       .catch(error => {
-        console.log('Error fetching fish types', error);
+        this.error = error;
+        // console.log('Error fetching fish types', error);
       });
     },
     getFishLocations({ commit }) {
@@ -111,7 +114,8 @@ export default new Vuex.Store({
         commit('SET_FISH_LOCATIONS', response.data)
       })
       .catch(error => {
-        console.log('Error fetching fish locations', error);
+        this.error = error;
+        // console.log('Error fetching fish locations', error);
       });
     }
   }
