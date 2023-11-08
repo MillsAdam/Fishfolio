@@ -3,30 +3,35 @@
         <form @submit.prevent="searchHistory">
             <b-row>
                 <b-col>
-                    <label for="history">History ID</label>
-                    <input v-model="trackingHistoryId" type="text" class="form-control" id="history" placeholder="Enter History ID"> 
+                    <label for="searchBy">Search By</label>
+                    <select v-model="searchBy" id="searchBy" class="custom-select">
+                        <option v-for="searchOption in searchOptions" :key="searchOption">{{ searchOption }}</option>
+                    </select>
                 </b-col>
 
-                <b-col cols="auto">
+                <b-col v-if="searchBy === 'History ID'">
+                    <label for="history">History ID</label>
+                    <input v-model="trackingHistoryId" type="text" class="custom-input" id="history" placeholder="Enter History ID"> 
+                </b-col>
+
+                <b-col v-if="searchBy === 'Fish ID'">
+                    <label for="fishId">Fish ID</label>
+                    <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
+                </b-col>
+
+                <b-col cols="auto" v-if="searchBy === 'Date'">
                     <label for="date">Date</label>
                     <div class="datePicker">
                         <b-form-datepicker
                             v-model="selectedDate"
                             @input="onDateSelected"
                             :start-view="'year'"
-
                             :max="new Date()"
                             :value-as-date="true"
                             button-only
                             right
-                            class="mb-2"
                         ></b-form-datepicker>
                     </div>
-                </b-col>
-
-                <b-col>
-                    <label for="fishId">Fish ID</label>
-                    <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
                 </b-col>
             </b-row>
 
@@ -89,6 +94,8 @@ export default {
             month: "",
             year: "",
             selectedDate: "",
+            searchBy: "",
+            searchOptions: ['History ID', 'Fish ID', 'Date'],
         }
     },
 
@@ -135,7 +142,6 @@ export default {
                     console.log('History found', response.data);
                     this.historyList = response.data;
                 }
-                this.resetFilters(); // keep or delete?
             } catch (error) {
                 console.error('Error finding history', error);
             }
@@ -146,6 +152,7 @@ export default {
             this.fishId = "";
             this.month = "";
             this.year = "";
+            this.searchBy = "";
         },
 
         clearFilters() {
@@ -153,6 +160,7 @@ export default {
             this.fishId = "";
             this.month = "";
             this.year = "";
+            this.searchBy = "";
             this.searchHistory();
         }, 
 

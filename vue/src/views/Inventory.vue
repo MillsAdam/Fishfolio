@@ -3,29 +3,34 @@
         <form @submit.prevent="searchInventory">
             <b-row>
                 <b-col>
+                    <label for="searchBy">Search By</label>
+                    <select v-model="searchBy" id="searchBy" class="custom-select">
+                        <option v-for="searchOption in searchOptions" :key="searchOption">{{ searchOption }}</option>
+                    </select>
+                </b-col>
+
+                <b-col v-if="searchBy === 'Sort By'">
                     <label for="sorting">Sort By</label>
-                    <select v-model="sortBy" class="form-control" id="sortBy">
+                    <select v-model="sortBy" id="sortBy" class="custom-select">
                         <option v-for="sortOption in sortOptions" :key="sortOption">{{ sortOption }}</option>
                     </select>
                 </b-col>
 
-                <b-col>
+                <b-col v-if="searchBy === 'Fish ID'">
                     <label for="fishId">Fish ID</label>
-                    <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
+                    <input v-model="fishId" type="text" id="fishId" class="custom-input" placeholder="Enter Fish ID">
                 </b-col>
-            </b-row>
 
-            <b-row>
-                <b-col>
+                <b-col v-if="searchBy === 'Type'">
                     <label for="type">Type</label>
-                    <select v-model="type" class="form-control" id="type">
+                    <select v-model="type" id="type" class="custom-select">
                         <option v-for="fishType in fishTypes" :key="fishType">{{ fishType }}</option>
                     </select>
                 </b-col>
 
-                <b-col>
+                <b-col v-if="searchBy === 'Location'">
                     <label for="location">Location</label>
-                    <select v-model="location" class="form-control" id="location">
+                    <select v-model="location" id="location" class="custom-select">
                         <option v-for="fishLocation in fishLocations" :key="fishLocation">{{ fishLocation }}</option>
                     </select>
                 </b-col>               
@@ -33,10 +38,10 @@
             
             <b-row>
                 <b-col>
-                    <button type="submit">Apply Filters</button>
+                    <button type="submit" class="w-100">Apply Filters</button>
                 </b-col>
                 <b-col>
-                    <button type="button" @click="clearFilters">Clear Filters</button>
+                    <button type="button" class="w-100" @click="clearFilters">Clear Filters</button>
                 </b-col>
             </b-row>
             
@@ -94,6 +99,8 @@ export default {
             type: "",
             location: "",
             sortBy: "",
+            searchBy: "",
+            searchOptions: ['Sort By', 'Fish ID', 'Type', 'Location'],
         }
     }, 
 
@@ -140,7 +147,7 @@ export default {
                     console.log('Fish found', response.data);
                     this.fishList = response.data;
                 }
-                this.resetFilters(); // keep or delete?
+
             } catch (error) {
                 console.log('Error finding fish', error);
             }
@@ -152,6 +159,7 @@ export default {
             this.type = "";
             this.location = "";
             this.sortBy = "";
+            this.searchBy = "";
         },
 
         clearFilters() {
@@ -159,6 +167,7 @@ export default {
             this.type = "";
             this.location = "";
             this.sortBy = "";
+            this.searchBy = "";
             this.searchInventory();
         },
 

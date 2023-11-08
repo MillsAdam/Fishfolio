@@ -1,43 +1,17 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-      
-            <template v-if="isLoggedIn">
-                &nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'logout' }" >Logout</router-link>&nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'inventory' }">Inventory</router-link>&nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'history' }">History</router-link>
-            </template>
-            
-            <template v-if="isAdmin">
-                &nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'fish-form' }">Fish Form</router-link>&nbsp;|&nbsp;
-                <router-link v-bind:to="{ name: 'history-form' }">History Form</router-link>
-            </template>
-            
-        </div>
+        <HeaderComponent />
         <router-view />
     </div>
 </template>
 
 <script>
+import HeaderComponent from '@/components/HeaderComponent.vue';
 
 export default {
-    computed: {
-        isLoggedIn() {
-            return !!this.$store.state.token;
-        },
-        isAdmin() {
-            const isAdmin = this.$store.state.user?.authorities?.some(auth => auth.name === 'ROLE_ADMIN' ?? false);
-
-            console.log('User: ', this.$store.state.user);
-            console.log('Authorities: ', this.$store.state.user?.authorities);
-            console.log('Is Admin: ', isAdmin);
-
-            return isAdmin;
-        }
-    }
+    components: {
+        HeaderComponent,
+    },
 }
 
 </script>
@@ -54,7 +28,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     font-size: 12px;
-    padding: 16px;
+    padding: 8px 16px;
 }
 
 button {
@@ -84,6 +58,13 @@ button:hover {
     margin-bottom: 10px;
 } */
 
+.form-input-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 label {
     font-weight: bold;
     display: block;
@@ -93,15 +74,31 @@ label {
 
 select, input {
     width: 300px;
-    padding: 8px 10px;
+    /* padding: 8px 10px; */
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 12px; /* not used */
 }
 
 input::placeholder {
     font-size: 12px;
+}
+
+.custom-select, .custom-input {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    height: calc(2.25rem + 2px);
 }
 
 .table-container {

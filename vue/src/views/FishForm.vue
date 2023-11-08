@@ -1,27 +1,27 @@
 <template>
     <div>
         <b-row>
-            <b-col>
-                <button @click="toggleCreateFishForm">Create Fish</button>
+            <b-col >
+                <button @click="toggleCreateFishForm">Create<br>Fish</button>
             </b-col>
             <b-col>
-                <button @click="toggleUpdateFishForm">Update Fish</button>
+                <button @click="toggleUpdateFishForm">Update<br>Fish</button>
             </b-col>
             <b-col>
-                <button @click="toggleDeleteFishForm">Delete Fish</button>
+                <button @click="toggleDeleteFishForm">Delete<br>Fish</button>
             </b-col>
         </b-row>
 
         <b-col v-if="showCreateFishForm">
             <form @submit.prevent="createFishForm">
-                <input v-model="name" type="text" class="form-control" id="name" placeholder="Enter Name">
-                <input v-model="type" type="text" class="form-control" id="type" placeholder="Enter Type">
-                <input v-model="length" type="text" class="form-control" id="length" placeholder="Enter Length">
-                <input v-model="weight" type="text" class="form-control" id="weight" placeholder="Enter Weight">
-                <input v-model="location" type="text" class="form-control" id="location" placeholder="Enter Location">
-                <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
-                <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
-                <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
+                <input v-model="name" type="text" class="custom-input" id="name" placeholder="Enter Name">
+                <input v-model="type" type="text" class="custom-input" id="type" placeholder="Enter Type">
+                <input v-model="length" type="text" class="custom-input" id="length" placeholder="Enter Length">
+                <input v-model="weight" type="text" class="custom-input" id="weight" placeholder="Enter Weight">
+                <input v-model="location" type="text" class="custom-input" id="location" placeholder="Enter Location">
+                <input v-model="lureUsed" type="text" class="custom-input" id="lureUsed" placeholder="Enter Lure Used">
+                <input v-model="dateCaught" type="text" class="custom-input" id="dateCaught" placeholder="Enter Date Caught">
+                <input v-model="imageUrl" type="text" class="custom-input" id="imageUrl" placeholder="Enter Image">
                 <b-row>
                     <b-col>
                         <button type="submit">Create Fish</button>
@@ -35,15 +35,15 @@
 
         <b-col v-if="showUpdateFishForm">
             <form @submit.prevent="updateFishForm">
-                <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
-                <input v-model="name" type="text" class="form-control" id="name" placeholder="Enter Name">
-                <input v-model="type" type="text" class="form-control" id="type" placeholder="Enter Type">
-                <input v-model="length" type="text" class="form-control" id="length" placeholder="Enter Length">
-                <input v-model="weight" type="text" class="form-control" id="weight" placeholder="Enter Weight">
-                <input v-model="location" type="text" class="form-control" id="location" placeholder="Enter Location">
-                <input v-model="lureUsed" type="text" class="form-control" id="lureUsed" placeholder="Enter Lure Used">
-                <input v-model="dateCaught" type="text" class="form-control" id="dateCaught" placeholder="Enter Date Caught">
-                <input v-model="imageUrl" type="text" class="form-control" id="imageUrl" placeholder="Enter Image">
+                <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
+                <input v-model="name" type="text" class="custom-input" id="name" placeholder="Enter Name">
+                <input v-model="type" type="text" class="custom-input" id="type" placeholder="Enter Type">
+                <input v-model="length" type="text" class="custom-input" id="length" placeholder="Enter Length">
+                <input v-model="weight" type="text" class="custom-input" id="weight" placeholder="Enter Weight">
+                <input v-model="location" type="text" class="custom-input" id="location" placeholder="Enter Location">
+                <input v-model="lureUsed" type="text" class="custom-input" id="lureUsed" placeholder="Enter Lure Used">
+                <input v-model="dateCaught" type="text" class="custom-input" id="dateCaught" placeholder="Enter Date Caught">
+                <input v-model="imageUrl" type="text" class="custom-input" id="imageUrl" placeholder="Enter Image">
                 <b-row>
                     <b-col>
                         <button type="submit">Update Fish</button>
@@ -57,7 +57,7 @@
 
         <b-col v-if="showDeleteFishForm">
             <form @submit.prevent="deleteFishForm">
-                <input v-model="fishId" type="text" class="form-control" id="fishId" placeholder="Enter Fish ID">
+                <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
                 <b-row>
                     <b-col>
                         <button type="submit">Delete Fish</button> 
@@ -262,6 +262,10 @@ export default {
 </script>
 
 <style scoped>
+
+.custom-input {
+    margin: 5px 0px;
+}
 
 button {
   width: 100%;
