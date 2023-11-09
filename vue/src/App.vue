@@ -141,4 +141,10 @@ th, td {
     border: none;
 }
 
+@media (min-width: 1200px) {
+  #app {
+    width: 100%; /* change for screen size? */
+    margin: 0 auto;
+  }
+}
 </style>

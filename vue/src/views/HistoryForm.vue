@@ -2,64 +2,64 @@
     <div>
         <b-row>
             <b-col>
-                <button @click="toggleCreateHistoryForm">Create<br>History</button>
+                <button @click="toggleCreateHistoryForm" id="btn-filter">Create<br>History</button>
             </b-col>
             <b-col>
-                <button @click="toggleUpdateHistoryForm">Update<br>History</button>
+                <button @click="toggleUpdateHistoryForm" id="btn-filter">Update<br>History</button>
             </b-col>
             <b-col>
-                <button @click="toggleDeleteHistoryForm">Delete<br>History</button>
+                <button @click="toggleDeleteHistoryForm" id="btn-filter">Delete<br>History</button>
             </b-col>
         </b-row>
 
-        <b-col v-if="showCreateHistoryForm">
-            <form @submit.prevent="createHistoryForm">
+        <form @submit.prevent="createHistoryForm" v-if="showCreateHistoryForm">
+            <b-col>
                 <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
                 <input v-model="recordedDate" type="text" class="custom-input" id="type" placeholder="Enter Date">
                 <input v-model="recordedLength" type="text" class="custom-input" id="length" placeholder="Enter Length">
                 <input v-model="recordedWeight" type="text" class="custom-input" id="weight" placeholder="Enter Weight">
-                <b-row>
-                    <b-col>
-                        <button type="submit">Create History</button>
-                    </b-col>
-                    <b-col>
-                        <button type="button" @click="resetForm">Reset Form</button>
-                    </b-col>
-                </b-row>
-            </form>
-        </b-col>
+            </b-col>
+            <b-row>
+                <b-col>
+                    <button type="submit" id="btn-filter">Create History</button>
+                </b-col>
+                <b-col>
+                    <button type="button" @click="resetForm" id="btn-filter">Reset Form</button>
+                </b-col>
+            </b-row>
+        </form>
 
-        <b-col v-if="showUpdateHistoryForm">
-            <form @submit.prevent="updateHistoryForm">
+        <form @submit.prevent="updateHistoryForm" v-if="showUpdateHistoryForm">
+            <b-col>
                 <input v-model="trackingHistoryId" type="text" class="custom-input" id="trackingHistoryId" placeholder="Enter History ID">
                 <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
                 <input v-model="recordedDate" type="text" class="custom-input" id="type" placeholder="Enter Date">
                 <input v-model="recordedLength" type="text" class="custom-input" id="length" placeholder="Enter Length">
                 <input v-model="recordedWeight" type="text" class="custom-input" id="weight" placeholder="Enter Weight">
-                <b-row>
-                    <b-col>
-                        <button type="submit">Update History</button>
-                    </b-col>
-                    <b-col>
-                        <button type="button" @click="resetForm">Reset Form</button>
-                    </b-col>
-                </b-row>
-            </form>
-        </b-col>
+            </b-col>
+            <b-row>
+                <b-col>
+                    <button type="submit" id="btn-filter">Update History</button>
+                </b-col>
+                <b-col>
+                    <button type="button" @click="resetForm" id="btn-filter">Reset Form</button>
+                </b-col>
+            </b-row>
+        </form>
 
-        <b-col v-if="showDeleteHistoryForm">
-            <form @submit.prevent="deleteHistoryForm">
+        <form @submit.prevent="deleteHistoryForm" v-if="showDeleteHistoryForm">
+            <b-col>
                 <input v-model="trackingHistoryId" type="text" class="custom-input" id="trackingHistoryId" placeholder="Enter History ID">
-                <b-row>
-                    <b-col>
-                        <button type="submit">Delete History</button>
-                    </b-col>
-                    <b-col>
-                        <button type="button" @click="resetForm">Reset Form</button>
-                    </b-col>
-                </b-row>
-            </form>
-        </b-col>
+            </b-col>
+            <b-row>
+                <b-col>
+                    <button type="submit" id="btn-filter">Delete History</button>
+                </b-col>
+                <b-col>
+                    <button type="button" @click="resetForm" id="btn-filter">Reset Form</button>
+                </b-col>
+            </b-row>
+        </form>
 
         <div v-if="successMessage" class="success-message">
             <p>{{ successMessage }}</p>

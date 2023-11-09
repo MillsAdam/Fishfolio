@@ -1,10 +1,11 @@
 <template>
     <div>
         <form @submit.prevent="searchHistory">
-            <b-row>
+            <!-- <b-row> -->
                 <b-col>
                     <label for="searchBy">Search By</label>
                     <select v-model="searchBy" id="searchBy" class="custom-select">
+                        <option value="" disabled selected hidden>Choose Search Criteria</option>
                         <option v-for="searchOption in searchOptions" :key="searchOption">{{ searchOption }}</option>
                     </select>
                 </b-col>
@@ -19,7 +20,7 @@
                     <input v-model="fishId" type="text" class="custom-input" id="fishId" placeholder="Enter Fish ID">
                 </b-col>
 
-                <b-col cols="auto" v-if="searchBy === 'Date'">
+                <b-col v-if="searchBy === 'Date'">
                     <label for="date">Date</label>
                     <div class="datePicker">
                         <b-form-datepicker
@@ -28,19 +29,22 @@
                             :start-view="'year'"
                             :max="new Date()"
                             :value-as-date="true"
-                            button-only
-                            right
+                            center
+                            variant="success"
+                            block
+                            :clear-button="true"
+                            :today-button="true"
                         ></b-form-datepicker>
                     </div>
                 </b-col>
-            </b-row>
+            <!-- </b-row> -->
 
-            <b-row>
+            <b-row id="filters">
                 <b-col>
-                    <button type="submit" class="w-100">Apply Filters</button>
+                    <button type="submit" class="w-100" id="btn-filter">Apply Filters</button>
                 </b-col>
                 <b-col>
-                    <button type="button" class="w-100" @click="clearFilters">Clear Filters</button>
+                    <button type="button" class="w-100" @click="clearFilters" id="btn-filter">Clear Filters</button>
                 </b-col>
             </b-row>
 
@@ -194,6 +198,10 @@ export default {
 button {
     width: 100%;
     margin: 10px 0px;
+}
+
+#filters {
+    margin-top: 10px;
 }
 
 </style>

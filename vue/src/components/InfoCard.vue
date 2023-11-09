@@ -13,10 +13,10 @@
         </div>
         <b-row>
             <b-col>
-                <button @click="previousFish" v-if="currentIndex !== 0">Previous</button>
+                <button @click="previousFish" v-if="currentIndex !== 0" id="btn-cycle">Previous</button>
             </b-col>
             <b-col>
-                <button @click="nextFish" v-if="currentIndex < fishList.length - 1">Next</button>
+                <button @click="nextFish" v-if="currentIndex < fishList.length - 1" id="btn-cycle">Next</button>
             </b-col>
         </b-row>
     </div>

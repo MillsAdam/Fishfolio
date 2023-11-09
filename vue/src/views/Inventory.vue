@@ -1,10 +1,11 @@
 <template>
     <div>
         <form @submit.prevent="searchInventory">
-            <b-row>
+            <!-- <b-row> -->
                 <b-col>
                     <label for="searchBy">Search By</label>
                     <select v-model="searchBy" id="searchBy" class="custom-select">
+                        <option value="" disabled selected hidden>Choose Search Criteria</option>
                         <option v-for="searchOption in searchOptions" :key="searchOption">{{ searchOption }}</option>
                     </select>
                 </b-col>
@@ -12,6 +13,7 @@
                 <b-col v-if="searchBy === 'Sort By'">
                     <label for="sorting">Sort By</label>
                     <select v-model="sortBy" id="sortBy" class="custom-select">
+                        <option value="" disabled selected hidden>Choose Sorting Criteria</option>
                         <option v-for="sortOption in sortOptions" :key="sortOption">{{ sortOption }}</option>
                     </select>
                 </b-col>
@@ -24,6 +26,7 @@
                 <b-col v-if="searchBy === 'Type'">
                     <label for="type">Type</label>
                     <select v-model="type" id="type" class="custom-select">
+                        <option value="" disabled selected hidden>Choose Fish Type</option>
                         <option v-for="fishType in fishTypes" :key="fishType">{{ fishType }}</option>
                     </select>
                 </b-col>
@@ -31,17 +34,18 @@
                 <b-col v-if="searchBy === 'Location'">
                     <label for="location">Location</label>
                     <select v-model="location" id="location" class="custom-select">
+                        <option value="" disabled selected hidden>Choose Fish Location</option>
                         <option v-for="fishLocation in fishLocations" :key="fishLocation">{{ fishLocation }}</option>
                     </select>
                 </b-col>               
-            </b-row>
+            <!-- </b-row> -->
             
-            <b-row>
+            <b-row id="filters">
                 <b-col>
-                    <button type="submit" class="w-100">Apply Filters</button>
+                    <button type="submit" class="w-100" id="btn-filter">Apply Filters</button>
                 </b-col>
                 <b-col>
-                    <button type="button" class="w-100" @click="clearFilters">Clear Filters</button>
+                    <button type="button" class="w-100" @click="clearFilters" id="btn-filter">Clear Filters</button>
                 </b-col>
             </b-row>
             
@@ -233,6 +237,10 @@ export default {
 button {
   width: 100%;
   margin: 10px 0px;
+}
+
+#filters {
+    margin-top: 10px;
 }
 
 </style>
