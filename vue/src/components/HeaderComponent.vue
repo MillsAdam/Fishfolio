@@ -1,5 +1,5 @@
 <template>
-    <div class="header-container">
+    <b-row>
         <div id="nav">
             <router-link v-bind:to="{ name: 'home' }">Home</router-link>
 
@@ -32,7 +32,7 @@
             </template>
             
         </div>
-    </div>
+    </b-row>
     
 </template>
 
@@ -77,6 +77,17 @@ export default {
 </script>
 
 <style scoped>
+
+#nav {
+    background-color: #2c3e50;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0px 16px;
+}
+
 #nav > a, .dropbtn {
     background-color: #2c3e50;
     color: white;
