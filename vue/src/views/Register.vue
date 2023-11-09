@@ -85,5 +85,10 @@ export default {
 </script>
 
 <style scoped>
-
+@media (min-width: 768px) {
+  #register {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
 </style>
